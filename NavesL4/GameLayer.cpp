@@ -284,6 +284,10 @@ void GameLayer::processControls() {
 		player->moveY(0);
 	}
 
+	if (controlChop == true) {
+		player->chop();
+	}
+
 
 
 }
@@ -367,10 +371,10 @@ void GameLayer::gamePadToControls(SDL_Event event) {
 	}
 
 	if (buttonA) {
-		controlShoot = true;
+		//controlShoot = true;
 	}
 	else {
-		controlShoot = false;
+		//controlShoot = false;
 	}
 
 	if (buttonB) {
@@ -395,7 +399,7 @@ void GameLayer::mouseToControls(SDL_Event event) {
 			controlMoveX = pad->getOrientationX(motionX);
 		}
 		if (buttonShoot->containsPoint(motionX, motionY)) {
-			controlShoot = true;
+			//controlShoot = true;
 		}
 		if (buttonJump->containsPoint(motionX, motionY)) {
 			controlMoveY = -1;
@@ -417,7 +421,7 @@ void GameLayer::mouseToControls(SDL_Event event) {
 			controlMoveX = 0;
 		}
 		if (buttonShoot->containsPoint(motionX, motionY) == false) {
-			controlShoot = false;
+			//controlShoot = false;
 		}
 		if (buttonJump->containsPoint(motionX, motionY) == false) {
 			controlMoveY = 0;
@@ -433,7 +437,7 @@ void GameLayer::mouseToControls(SDL_Event event) {
 		}
 
 		if (buttonShoot->containsPoint(motionX, motionY)) {
-			controlShoot = false;
+			//controlShoot = false;
 		}
 		if (buttonJump->containsPoint(motionX, motionY)) {
 			controlMoveY = 0;
@@ -467,7 +471,7 @@ void GameLayer::keysToControls(SDL_Event event) {
 			controlMoveY = 1;
 			break;
 		case SDLK_SPACE: // dispara
-			controlShoot = true;
+			controlChop = true;
 			break;
 		}
 
@@ -497,11 +501,22 @@ void GameLayer::keysToControls(SDL_Event event) {
 				controlMoveY = 0;
 			}
 			break;
-		case SDLK_SPACE: // dispara
-			controlShoot = false;
+		case SDLK_SPACE: // accion
+			controlChop = false;
 			break;
 		}
 
+	}
+	// ZOOM
+	if (event.type == SDL_MOUSEWHEEL) {
+		if (event.button.x == 1) {
+			//if (engine->scale < engine->maxScale) engine->scale += 0.25f;
+			game->zoomIn();
+		}
+		else if (event.button.x == -1) {
+			//if (engine->scale > engine->minScale) engine->scale -= 0.25f;
+			game->zoomOut();
+		}
 	}
 
 }

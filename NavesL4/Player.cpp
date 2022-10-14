@@ -22,6 +22,14 @@ Player::Player(float x, float y, Game* game)
 		384, 48, 3, 8, true, game);
 	aIdleUp = new Animation("res/playeridle2.png", width, height,
 		384, 48, 3, 8, true, game);
+	aChoppingDown = new Animation("res/chop1.png", width, height,
+		384, 48, 3, 8, false, game);
+	aChoppingUp = new Animation("res/chop2.png", width, height,
+		384, 48, 3, 8, false, game);
+	aChoppingLeft = new Animation("res/chop3.png", width, height,
+		384, 48, 3, 8, false, game);
+	aChoppingRight = new Animation("res/chop4.png", width, height,
+		384, 48, 3, 8, false, game);
 	animation = aRunningRight;
 
 }
@@ -34,11 +42,9 @@ void Player::update() {
 
 	// Acabo la animación, no sabemos cual
 	if (endAnimation) {
-		if (state == game->stateShooting) {
+		if (state == game->stateChopping)
 			state = game->stateMoving;
-		}
 	}
-
 
 	// Establecer orientación
 	if (vx > 0) {
@@ -56,6 +62,21 @@ void Player::update() {
 
 
 	// Selección de animación basada en estados
+
+	if (state == game->stateChopping) {
+		if (orientation == game->orientationRight) {
+			animation = aChoppingRight;
+		}
+		if (orientation == game->orientationLeft) {
+			animation = aChoppingLeft;
+		}
+		if (orientation == game->orientationDown) {
+			animation = aChoppingDown;
+		}
+		if (orientation == game->orientationUp) {
+			animation = aChoppingUp;
+		}
+	}
 
 	if (state == game->stateMoving) {
 		if (vx != 0 && vy == 0) {
@@ -88,8 +109,13 @@ void Player::update() {
 				animation = aIdleDown;
 			}
 		}
+
+		if (chopTime > 0) {
+			chopTime--;
+		}
 	}
-	cout << "Orientation: " << orientation << endl;
+
+	cout << "State: " << state << endl;
 }
 
 void Player::moveX(float axis) {
@@ -103,4 +129,16 @@ void Player::moveY(float axis) {
 void Player::draw(float scrollX, float scrollY) {
 	animation->draw(x - scrollX, y - scrollY);
 
+}
+
+void Player::chop() {
+	if (chopTime == 0) {
+		state = game->stateChopping;
+		chopTime = chopCadence;
+		// "Rebobinar" animaciones
+		aChoppingRight->currentFrame = 0; 
+		aChoppingLeft->currentFrame = 0; 
+		aChoppingDown->currentFrame = 0; 
+		aChoppingUp->currentFrame = 0; 
+	}
 }

@@ -50,7 +50,7 @@ public:
 	Player* player;
 
 	bool controlContinue = false;
-	bool controlShoot = false;
+	bool controlChop = false;
 	int controlMoveY = 0;
 	int controlMoveX = 0;
 

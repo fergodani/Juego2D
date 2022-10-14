@@ -9,10 +9,12 @@ Game::Game() {
 	if (SDL_CreateWindowAndRenderer(WIDTH, HEIGHT, 0, &window, &renderer) < 0) {
 		cout << "Error Window y Renderer" << SDL_GetError() << endl;
 	}
-	SDL_SetWindowTitle(window, "Juego de Naves");
+	SDL_SetWindowTitle(window, "Juego2D");
 	// Escalado de imágenes de calidad 
 	// https://wiki.libsdl.org/SDL_HINT_RENDER_SCALE_QUALITY
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+
+	//SDL_RenderSetLogicalSize(renderer, 1920, 1080);
 	
 	menuLayer = new MenuLayer(this);
 	gameLayer = new GameLayer(this);
@@ -65,14 +67,14 @@ void Game::scale() {
 			scaleLower = scaleY;
 		}
 		// Cambiar dimensiones ventana
-		SDL_SetWindowSize(window, WIDTH * scaleLower, HEIGHT * scaleLower);
+		//SDL_SetWindowSize(window, WIDTH * scaleLower, HEIGHT * scaleLower);
 		// Cambiar escala del render
 		SDL_RenderSetScale(renderer, scaleLower, scaleLower);
 	}
 	else { // Escala Original
 		scaleLower = 1;
 		// Cambiar dimensiones ventana
-		SDL_SetWindowSize(window, WIDTH, HEIGHT);
+		//SDL_SetWindowSize(window, WIDTH, HEIGHT);
 		// Cambiar escala del render
 		SDL_RenderSetScale(renderer, 1, 1);
 	}
@@ -91,6 +93,20 @@ SDL_Texture* Game::getTexture(string filename) {
 	}
 
 	return mapTextures[filename];
+}
+
+void Game::zoomIn() {
+	scaleFactor += 0.25f;
+	SDL_RenderSetScale(renderer, scaleFactor, scaleFactor);
+}
+
+void Game::zoomOut() {
+	scaleFactor -= 0.25f;
+	SDL_RenderSetScale(renderer, scaleFactor, scaleFactor);
+}
+
+void Game::changeResolution() {
+	SDL_RenderSetLogicalSize(renderer, 1920, 1080);
 }
 
 

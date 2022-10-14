@@ -22,7 +22,14 @@ public:
 	Animation* aIdleLeft;
 	Animation* aIdleDown;
 	Animation* aIdleUp;
-	Animation* aChop;
+	Animation* aChoppingRight;
+	Animation* aChoppingLeft;
+	Animation* aChoppingDown;
+	Animation* aChoppingUp;
 	Animation* animation; // Referencia a la animación mostrada
+
+	void chop();
+	int chopTime = 0;
+	int chopCadence = 20;
 };
 
