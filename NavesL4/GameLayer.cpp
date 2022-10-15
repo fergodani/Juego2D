@@ -39,6 +39,7 @@ void GameLayer::init() {
 
 	loadMap("res/agua.txt");
 	loadMap("res/terreno.txt");
+	loadMap("res/hills.txt");
 	loadMap("res/detalles.txt");
 }
 
@@ -214,6 +215,20 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case '9': {
 		Tile* tile = new Tile("res/hierba9.png", x, y, 32, 32, game);
+		// modificación para empezar a contar desde el suelo.
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		break;
+	}
+	case 'r': {
+		Tile* tile = new Tile("res/rampa1.png", x, y, 32, 32, game);
+		// modificación para empezar a contar desde el suelo.
+		tile->y = tile->y - tile->height / 2;
+		tiles.push_back(tile);
+		break;
+	}
+	case 't': {
+		Tile* tile = new Tile("res/rampa2.png", x, y, 32, 32, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
