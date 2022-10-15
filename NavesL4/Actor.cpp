@@ -30,8 +30,8 @@ void Actor::draw(float scrollX, float scrollY) {
 	SDL_Rect destination;
 	destination.x = x - width / 2 - scrollX;
 	destination.y = y - height / 2 - scrollY;
-	destination.w = width;
-	destination.h = height;
+	destination.w = width * game->scaleFactor;
+	destination.h = height * game->scaleFactor;
 	// Modificar para que la referencia sea el punto central
 
 	SDL_RenderCopyEx(game->renderer,

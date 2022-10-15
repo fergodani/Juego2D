@@ -51,8 +51,16 @@ public:
 
 	bool controlContinue = false;
 	bool controlChop = false;
+	bool controlPlow = false;
+	bool controlWater = false;
+	bool controlAction = false;
+	bool controlSwitchTool = false;
 	int controlMoveY = 0;
 	int controlMoveX = 0;
+
+	Actor* backgroundWateringCan;
+	Actor* backgroundHoe;
+	Actor* backgroundAxe;
 
 
 };

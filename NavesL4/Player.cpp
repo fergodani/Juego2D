@@ -7,31 +7,48 @@ Player::Player(float x, float y, Game* game)
 	state = game->stateMoving;
 
 	aRunningRight = new Animation("res/playerrun3.png", width, height,
-		384, 48, 4, 8, true, game);
+		384, 48, 2, 8, true, game);
 	aRunningLeft = new Animation("res/playerrun4.png", width, height,
-		384, 48, 4, 8, true, game);
+		384, 48, 2, 8, true, game);
 	aRunningDown = new Animation("res/playerrun1.png", width, height,
-		384, 48, 4, 8, true, game);
+		384, 48, 2, 8, true, game);
 	aRunningUp = new Animation("res/playerrun2.png", width, height,
-		384, 48, 4, 8, true, game);
+		384, 48, 2, 8, true, game);
 	aIdleRight = new Animation("res/playeridle4.png", width, height,
-		384, 48, 3, 8, true, game);
+		384, 48, 2, 8, true, game);
 	aIdleLeft = new Animation("res/playeridle3.png", width, height,
-		384, 48, 3, 8, true, game);
+		384, 48, 2, 8, true, game);
 	aIdleDown = new Animation("res/playeridle1.png", width, height,
-		384, 48, 3, 8, true, game);
+		384, 48, 2, 8, true, game);
 	aIdleUp = new Animation("res/playeridle2.png", width, height,
-		384, 48, 3, 8, true, game);
+		384, 48, 2, 8, true, game);
 	aChoppingDown = new Animation("res/chop1.png", width, height,
-		384, 48, 3, 8, false, game);
+		384, 48, 2, 8, false, game);
 	aChoppingUp = new Animation("res/chop2.png", width, height,
-		384, 48, 3, 8, false, game);
+		384, 48, 2, 8, false, game);
 	aChoppingLeft = new Animation("res/chop3.png", width, height,
-		384, 48, 3, 8, false, game);
+		384, 48, 2, 8, false, game);
 	aChoppingRight = new Animation("res/chop4.png", width, height,
-		384, 48, 3, 8, false, game);
+		384, 48, 2, 8, false, game);
+	aPlowingRight = new Animation("res/arar4.png", width, height,
+		384, 48, 2, 8, false, game);
+	aPlowingLeft = new Animation("res/arar3.png", width, height,
+		384, 48, 2, 8, false, game);
+	aPlowingDown = new Animation("res/arar1.png", width, height,
+		384, 48, 2, 8, false, game);
+	aPlowingUp = new Animation("res/arar2.png", width, height,
+		384, 48, 2, 8, false, game);
+	aWateringRight = new Animation("res/watering4.png", width, height,
+		384, 48, 2, 8, false, game);
+	aWateringLeft = new Animation("res/watering3.png", width, height,
+		384, 48, 2, 8, false, game);
+	aWateringDown = new Animation("res/watering1.png", width, height,
+		384, 48, 2, 8, false, game);
+	aWateringUp = new Animation("res/watering2.png", width, height,
+		384, 48, 2, 8, false, game);
 	animation = aRunningRight;
 
+	actualTool = hoe;
 }
 
 
@@ -43,6 +60,10 @@ void Player::update() {
 	// Acabo la animación, no sabemos cual
 	if (endAnimation) {
 		if (state == game->stateChopping)
+			state = game->stateMoving;
+		if (state == game->statePlowing)
+			state = game->stateMoving;
+		if (state = game->stateWatering)
 			state = game->stateMoving;
 	}
 
@@ -75,6 +96,36 @@ void Player::update() {
 		}
 		if (orientation == game->orientationUp) {
 			animation = aChoppingUp;
+		}
+	}
+
+	if (state == game->statePlowing) {
+		if (orientation == game->orientationRight) {
+			animation = aPlowingRight;
+		}
+		if (orientation == game->orientationLeft) {
+			animation = aPlowingLeft;
+		}
+		if (orientation == game->orientationDown) {
+			animation = aPlowingDown;
+		}
+		if (orientation == game->orientationUp) {
+			animation = aPlowingUp;
+		}
+	}
+
+	if (state == game->stateWatering) {
+		if (orientation == game->orientationRight) {
+			animation = aWateringRight;
+		}
+		if (orientation == game->orientationLeft) {
+			animation = aWateringLeft;
+		}
+		if (orientation == game->orientationDown) {
+			animation = aWateringDown;
+		}
+		if (orientation == game->orientationUp) {
+			animation = aWateringUp;
 		}
 	}
 
@@ -113,9 +164,16 @@ void Player::update() {
 		if (chopTime > 0) {
 			chopTime--;
 		}
+		if (plowTime > 0) {
+			plowTime--;
+		}
+
+		if (waterTime > 0) {
+			waterTime--;
+		}
 	}
 
-	cout << "State: " << state << endl;
+	cout << "Actual tool: " << actualTool << endl;
 }
 
 void Player::moveX(float axis) {
@@ -140,5 +198,52 @@ void Player::chop() {
 		aChoppingLeft->currentFrame = 0; 
 		aChoppingDown->currentFrame = 0; 
 		aChoppingUp->currentFrame = 0; 
+	}
+}
+
+void Player::plow() {
+	if (plowTime == 0) {
+		state = game->statePlowing;
+		plowTime = plowCadence;
+		// "Rebobinar" animaciones
+		aPlowingRight->currentFrame = 0;
+		aPlowingLeft->currentFrame = 0;
+		aPlowingDown->currentFrame = 0;
+		aPlowingUp->currentFrame = 0;
+	}
+}
+
+void Player::water() {
+	if (waterTime == 0) {
+		state = game->stateWatering;
+		waterTime = waterCadence;
+		// "Rebobinar" animaciones
+		aWateringRight->currentFrame = 0;
+		aWateringLeft->currentFrame = 0;
+		aWateringDown->currentFrame = 0;
+		aWateringUp->currentFrame = 0;
+	}
+}
+
+void Player::nextTool() {
+	if (actualTool == hoe)
+		actualTool = watering_can;
+	else if (actualTool == watering_can)
+		actualTool = axe;
+	else
+		actualTool = hoe;
+}
+
+void Player::action() {
+	switch (actualTool) {
+		case axe:
+			chop();
+			break;
+		case watering_can:
+			water();
+			break;
+		case hoe:
+			plow();
+			break;
 	}
 }

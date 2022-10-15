@@ -26,10 +26,34 @@ public:
 	Animation* aChoppingLeft;
 	Animation* aChoppingDown;
 	Animation* aChoppingUp;
+	Animation* aPlowingRight;
+	Animation* aPlowingLeft;
+	Animation* aPlowingDown;
+	Animation* aPlowingUp;
+	Animation* aWateringRight;
+	Animation* aWateringLeft;
+	Animation* aWateringDown;
+	Animation* aWateringUp;
 	Animation* animation; // Referencia a la animación mostrada
 
+	enum tool {axe, watering_can, hoe};
+	int actualTool;
+	void nextTool();
+	void action();
+
+	// Talado
 	void chop();
 	int chopTime = 0;
-	int chopCadence = 20;
+	int chopCadence = 5;
+
+	// Arado
+	void plow();
+	int plowTime = 0;
+	int plowCadence = 5;
+
+	// Regado
+	void water();
+	int waterTime = 0;
+	int waterCadence = 5;
 };
 

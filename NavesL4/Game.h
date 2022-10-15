@@ -48,6 +48,8 @@ public:
 
 	int const stateMoving = 1;
 	int const stateChopping = 2;
+	int const statePlowing = 3;
+	int const stateWatering = 4;
 
 	int const orientationRight = 1;
 	int const orientationLeft = 2;

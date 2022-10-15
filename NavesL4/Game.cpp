@@ -67,14 +67,14 @@ void Game::scale() {
 			scaleLower = scaleY;
 		}
 		// Cambiar dimensiones ventana
-		//SDL_SetWindowSize(window, WIDTH * scaleLower, HEIGHT * scaleLower);
+		SDL_SetWindowSize(window, WIDTH * scaleLower, HEIGHT * scaleLower);
 		// Cambiar escala del render
 		SDL_RenderSetScale(renderer, scaleLower, scaleLower);
 	}
 	else { // Escala Original
 		scaleLower = 1;
 		// Cambiar dimensiones ventana
-		//SDL_SetWindowSize(window, WIDTH, HEIGHT);
+		SDL_SetWindowSize(window, WIDTH, HEIGHT);
 		// Cambiar escala del render
 		SDL_RenderSetScale(renderer, 1, 1);
 	}

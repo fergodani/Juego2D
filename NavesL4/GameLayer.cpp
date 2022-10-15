@@ -27,8 +27,15 @@ void GameLayer::init() {
 	//audioBackground->play();
 
 	points = 0;
-	textPoints = new Text("hola", WIDTH * 0.92, HEIGHT * 0.04, game);
-	textPoints->content = to_string(points);
+	//textPoints = new Text("hola", WIDTH * 0.92, HEIGHT * 0.04, game);
+	//textPoints->content = to_string(points);
+
+	backgroundWateringCan = new Actor("res/water_can.png",
+		WIDTH * 0.05, HEIGHT * 0.05, 16, 16, game);
+	backgroundAxe = new Actor("res/axe.png",
+		WIDTH * 0.05, HEIGHT * 0.05, 16, 16, game);
+	backgroundHoe = new Actor("res/hoe.png",
+		WIDTH * 0.05, HEIGHT * 0.05, 16, 16, game);
 
 	loadMap("res/agua.txt");
 	loadMap("res/terreno.txt");
@@ -78,7 +85,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'a': {
-		Tile* tile = new Tile("res/agua.png", x, y, 32, 32, game);
+		Tile* tile = new Tile("res/agua.png", x, y, 16, 16, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -288,6 +295,20 @@ void GameLayer::processControls() {
 		player->chop();
 	}
 
+	if (controlPlow == true) {
+		player->plow();
+	}
+
+	if (controlWater == true) {
+		player->water();
+	}
+	if (controlAction == true) {
+		player->action();
+	}
+	if (controlSwitchTool == true) {
+		player->nextTool();
+	}
+
 
 
 }
@@ -305,33 +326,8 @@ void GameLayer::update() {
 }
 
 void GameLayer::calculateScroll() {
-	// limite izquierda
-	if (player->x > WIDTH * 0.3) {
-		if (player->x - scrollX < WIDTH * 0.3) {
-			scrollX = player->x - WIDTH * 0.3;
-		}
-	}
-
-	// limite derecha
-	if (player->x < mapWidth - WIDTH * 0.3) {
-		if (player->x - scrollX > WIDTH * 0.7) {
-			scrollX = player->x - WIDTH * 0.7;
-		}
-	}
-
-	// limite arriba
-	if (player->y > HEIGHT * 0.3) {
-		if (player->y - scrollY < HEIGHT * 0.3) {
-			scrollY = player->y - HEIGHT * 0.3;
-		}
-	}
-
-	// limite abajo
-	if (player->y < mapHeight - HEIGHT * 0.3) {
-		if (player->y - scrollY > HEIGHT * 0.7) {
-			scrollY = player->y - HEIGHT * 0.7;
-		}
-	}
+	scrollX = player->x - WIDTH/2;
+	scrollY = player->y - HEIGHT/2;
 }
 
 
@@ -343,6 +339,12 @@ void GameLayer::draw() {
 	}
 	player->draw(scrollX, scrollY);
 	// HUD
+	if (player->actualTool == player->axe)
+		backgroundAxe->draw();
+	if (player->actualTool == player->hoe)
+		backgroundHoe->draw();
+	if (player->actualTool == player->watering_can)
+		backgroundWateringCan->draw();
 
 	SDL_RenderPresent(game->renderer); // Renderiza
 }
@@ -455,7 +457,7 @@ void GameLayer::keysToControls(SDL_Event event) {
 		case SDLK_ESCAPE:
 			game->loopActive = false;
 			break;
-		case SDLK_1:
+		case SDLK_0:
 			game->scale();
 			break;
 		case SDLK_d: // derecha
@@ -471,9 +473,19 @@ void GameLayer::keysToControls(SDL_Event event) {
 			controlMoveY = 1;
 			break;
 		case SDLK_SPACE: // dispara
-			controlChop = true;
+			controlAction = true;
+			break;
+		case SDLK_e:
+			controlPlow = true;
+			break;
+		case SDLK_q:
+			controlWater = true;
+			break;
+		case SDLK_TAB:
+			//controlSwitchTool = false;
 			break;
 		}
+		
 
 
 	}
@@ -502,7 +514,16 @@ void GameLayer::keysToControls(SDL_Event event) {
 			}
 			break;
 		case SDLK_SPACE: // accion
-			controlChop = false;
+			controlAction = false;
+			break;
+		case SDLK_e:
+			controlPlow = false;
+			break;
+		case SDLK_q:
+			controlWater = false;
+			break;
+		case SDLK_TAB:
+			player->nextTool();
 			break;
 		}
 
