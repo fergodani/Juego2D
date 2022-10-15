@@ -94,7 +94,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'q': {
-		Tile* tile = new Tile("res/detalle1.png", x, y, 8, 8, game);
+		Tile* tile = new Tile("res/detalle1.png", x, y, 16, 16, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -102,7 +102,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'w': {
-		Tile* tile = new Tile("res/detalle2.png", x, y, 8, 8, game);
+		Tile* tile = new Tile("res/detalle2.png", x, y, 16, 16, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
