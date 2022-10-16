@@ -146,7 +146,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
-		space->addStaticActor(tile);
+		//space->addStaticActor(tile);
 		break;
 	}
 	case 'z': {
@@ -324,8 +324,6 @@ void GameLayer::processControls() {
 		player->nextTool();
 	}
 
-
-
 }
 
 void GameLayer::update() {
@@ -335,9 +333,19 @@ void GameLayer::update() {
 
 	space->update();
 	player->update();
-
+	spawnGrass();
 
 	//cout << "update GameLayer" << endl;
+}
+
+void GameLayer::spawnGrass() {
+	if (grassSpawnTime == 0) {
+		grassSpawnTime = grassSpawnCadence;
+		int rX = (rand() % (600 - 500)) + 1 + 500;
+		int rY = (rand() % (300 - 60)) + 1 + 60;
+		grassList.push_back(new Grass(rX, rY, game));
+
+	}
 }
 
 void GameLayer::calculateScroll() {
@@ -351,6 +359,10 @@ void GameLayer::draw() {
 
 	for (auto const& tile : tiles) {
 		tile->draw(scrollX, scrollY);
+	}
+	
+	for (auto const& grass : grassList) {
+		grass->draw(scrollX, scrollY);
 	}
 	player->draw(scrollX, scrollY);
 	// HUD

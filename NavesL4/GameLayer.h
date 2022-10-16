@@ -6,6 +6,7 @@
 #include "Text.h"
 #include "Tile.h"
 #include "Pad.h"
+#include "Grass.h"
 
 #include "Audio.h"
 #include "Space.h" // importar
@@ -61,6 +62,11 @@ public:
 	Actor* backgroundWateringCan;
 	Actor* backgroundHoe;
 	Actor* backgroundAxe;
+
+	list<Grass*> grassList;
+	int grassSpawnTime = 0;
+	int grassSpawnCadence = 5;
+	void spawnGrass();
 
 
 };
