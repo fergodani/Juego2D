@@ -1,9 +1,9 @@
 #pragma once
-#include "Actor.h"
+#include "Item.h"
 
-class Grass : public Actor
+class Grass : public Item
 {
 public:
-	Grass(float x, float y, Game* game);
+	Grass(float x, float y, Game* game, int cuantity);
 };
 

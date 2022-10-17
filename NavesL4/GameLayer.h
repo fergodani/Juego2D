@@ -7,6 +7,7 @@
 #include "Tile.h"
 #include "Pad.h"
 #include "Grass.h"
+#include "Item.h"
 
 #include "Audio.h"
 #include "Space.h" // importar
@@ -67,6 +68,8 @@ public:
 	int grassSpawnTime = 0;
 	int grassSpawnCadence = 5;
 	void spawnGrass();
+
+	list<Item*> itemsList;
 
 
 };
