@@ -3,6 +3,7 @@
 #include "Actor.h"
 #include "Audio.h"
 #include "Animation.h" // incluir animacion 
+#include "Inventory.h"
 
 class Player : public Actor
 {
@@ -55,5 +56,7 @@ public:
 	void water();
 	int waterTime = 0;
 	int waterCadence = 5;
+
+	Inventory* inventory;
 };
 

@@ -86,7 +86,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'a': {
-		Tile* tile = new Tile("res/agua.png", x, y, 16, 16, game);
+		Tile* tile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -94,7 +94,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'q': {
-		Tile* tile = new Tile("res/detalle1.png", x, y, 16, 16, game);
+		Tile* tile = new Tile("res/detalle1.png", x, y, 16, 16, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -102,7 +102,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'w': {
-		Tile* tile = new Tile("res/detalle2.png", x, y, 16, 16, game);
+		Tile* tile = new Tile("res/detalle2.png", x, y, 16, 16, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -110,7 +110,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'b': {
-		Tile* tile = new Tile("res/b.png", x, y, 16, 16, game);
+		Tile* tile = new Tile("res/b.png", x, y, 16, 16, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -118,7 +118,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'c': {
-		Tile* tile = new Tile("res/c.png", x, y, 16, 16, game);
+		Tile* tile = new Tile("res/c.png", x, y, 16, 16, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -126,7 +126,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'n': {
-		Tile* tile = new Tile("res/n.png", x, y, 16, 16, game);
+		Tile* tile = new Tile("res/n.png", x, y, 16, 16, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -134,7 +134,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'v': {
-		Tile* tile = new Tile("res/v.png", x, y, 16, 16, game);
+		Tile* tile = new Tile("res/v.png", x, y, 16, 16, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -142,7 +142,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'x': {
-		Tile* tile = new Tile("res/x.png", x, y, 16, 16, game);
+		Tile* tile = new Tile("res/x.png", x, y, 16, 16, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -150,7 +150,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'z': {
-		Tile* tile = new Tile("res/z.png", x, y, 16, 16, game);
+		Tile* tile = new Tile("res/z.png", x, y, 16, 16, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -158,77 +158,77 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '1': {
-		Tile* tile = new Tile("res/hierba1.png", x, y, 32, 32, game);
+		Tile* tile = new Tile("res/hierba1.png", x, y, 32, 32, true, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		break;
 	}
 	case '2': {
-		Tile* tile = new Tile("res/hierba2.png", x, y, 32, 32, game);
+		Tile* tile = new Tile("res/hierba2.png", x, y, 32, 32, false,  game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		break;
 	}
 	case '3': {
-		Tile* tile = new Tile("res/hierba3.png", x, y, 32, 32, game);
+		Tile* tile = new Tile("res/hierba3.png", x, y, 32, 32, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		break;
 	}
 	case '4': {
-		Tile* tile = new Tile("res/hierba4.png", x, y, 32, 32, game);
+		Tile* tile = new Tile("res/hierba4.png", x, y, 32, 32, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		break;
 	}
 	case '5': {
-		Tile* tile = new Tile("res/hierba5.png", x, y, 32, 32, game);
+		Tile* tile = new Tile("res/hierba5.png", x, y, 32, 32, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		break;
 	}
 	case '6': {
-		Tile* tile = new Tile("res/hierba6.png", x, y, 32, 32, game);
+		Tile* tile = new Tile("res/hierba6.png", x, y, 32, 32, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		break;
 	}
 	case '7': {
-		Tile* tile = new Tile("res/hierba7.png", x, y, 32, 32, game);
+		Tile* tile = new Tile("res/hierba7.png", x, y, 32, 32, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		break;
 	}
 	case '8': {
-		Tile* tile = new Tile("res/hierba8.png", x, y, 32, 32, game);
+		Tile* tile = new Tile("res/hierba8.png", x, y, 32, 32, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		break;
 	}
 	case '9': {
-		Tile* tile = new Tile("res/hierba9.png", x, y, 32, 32, game);
+		Tile* tile = new Tile("res/hierba9.png", x, y, 32, 32, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		break;
 	}
 	case 'r': {
-		Tile* tile = new Tile("res/rampa1.png", x, y, 32, 32, game);
+		Tile* tile = new Tile("res/rampa1.png", x, y, 32, 32, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		break;
 	}
 	case 't': {
-		Tile* tile = new Tile("res/rampa2.png", x, y, 32, 32, game);
+		Tile* tile = new Tile("res/rampa2.png", x, y, 32, 32, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -333,17 +333,29 @@ void GameLayer::update() {
 
 	space->update();
 	player->update();
+
 	spawnGrass();
 
-	//cout << "update GameLayer" << endl;
+	if (grassSpawnTime > 0) {
+		grassSpawnTime--;
+	}
+
+	cout << "Total grass:" << grassList.size() << endl;
 }
 
 void GameLayer::spawnGrass() {
-	if (grassSpawnTime == 0) {
+	if (grassSpawnTime == 0 && grassList.size() < 25) {
 		grassSpawnTime = grassSpawnCadence;
-		int rX = (rand() % (600 - 500)) + 1 + 500;
-		int rY = (rand() % (300 - 60)) + 1 + 60;
-		grassList.push_back(new Grass(rX, rY, game));
+		int rX = (rand() % mapWidth);
+		int rY = (rand() % mapHeight);
+		Grass* grass = new Grass(rX, rY, game);
+		for (auto const& tile : tiles) {
+			if (tile->isOverlap(grass) && tile->canSpawn) {
+				grassList.push_back(grass);
+				return;
+			}
+		}
+		
 
 	}
 }
@@ -372,6 +384,7 @@ void GameLayer::draw() {
 		backgroundHoe->draw();
 	if (player->actualTool == player->watering_can)
 		backgroundWateringCan->draw();
+	player->inventory->drawItems();
 
 	SDL_RenderPresent(game->renderer); // Renderiza
 }

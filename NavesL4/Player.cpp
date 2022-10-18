@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "GameLayer.h"
+#include <list>
 
 Player::Player(float x, float y, Game* game)
 	: Actor("res/jugador.png", x, y, 45, 45, game) {
@@ -49,6 +51,7 @@ Player::Player(float x, float y, Game* game)
 	animation = aRunningRight;
 
 	actualTool = hoe;
+	inventory = new Inventory();
 }
 
 
@@ -173,7 +176,6 @@ void Player::update() {
 		}
 	}
 
-	cout << "Actual tool: " << actualTool << endl;
 }
 
 void Player::moveX(float axis) {
@@ -190,6 +192,7 @@ void Player::draw(float scrollX, float scrollY) {
 }
 
 void Player::chop() {
+	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 	if (chopTime == 0) {
 		state = game->stateChopping;
 		chopTime = chopCadence;
@@ -198,6 +201,15 @@ void Player::chop() {
 		aChoppingLeft->currentFrame = 0; 
 		aChoppingDown->currentFrame = 0; 
 		aChoppingUp->currentFrame = 0; 
+		Grass* deleteGrass{};
+		for (auto const& grass : gameLayer->grassList) {
+			if (this->isOverlap(grass)){
+				cout << "Overlap grass" << endl;
+				deleteGrass = grass;
+			}
+		}
+		if(deleteGrass != nullptr)
+			deleteGrass->~Grass();
 	}
 }
 
