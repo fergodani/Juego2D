@@ -10,5 +10,7 @@ public:
 	Actor* icon;
 	int cuantity;
 	float price;
+	string id;
+	void increment();
 };
 

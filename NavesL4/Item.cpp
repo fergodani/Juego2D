@@ -16,3 +16,7 @@ void Item::drawIcon() {
 void Item::action() {
 	// TODO
 }
+
+void Item::increment() {
+	cuantity++;
+}

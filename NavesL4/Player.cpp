@@ -62,8 +62,19 @@ void Player::update() {
 
 	// Acabo la animación, no sabemos cual
 	if (endAnimation) {
-		if (state == game->stateChopping)
+		GameLayer* gameLayer = (GameLayer*)game->gameLayer;
+		if (state == game->stateChopping) {
+			Grass* deleteGrass{};
+			for (auto const& grass : gameLayer->grassList) {
+				if (this->isOverlap(grass)) {
+					cout << "Overlap grass" << endl;
+					deleteGrass = grass;
+				}
+			}
+			if (deleteGrass != nullptr)
+				deleteGrass->~Grass();
 			state = game->stateMoving;
+		}
 		if (state == game->statePlowing)
 			state = game->stateMoving;
 		if (state = game->stateWatering)
@@ -175,6 +186,9 @@ void Player::update() {
 			waterTime--;
 		}
 	}
+	for (auto const& item : inventory->items) {
+		cout << "Item id: " << item->id << " Cuantity: " << item->cuantity << endl;
+	}
 
 }
 
@@ -192,7 +206,6 @@ void Player::draw(float scrollX, float scrollY) {
 }
 
 void Player::chop() {
-	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 	if (chopTime == 0) {
 		state = game->stateChopping;
 		chopTime = chopCadence;
@@ -201,15 +214,7 @@ void Player::chop() {
 		aChoppingLeft->currentFrame = 0; 
 		aChoppingDown->currentFrame = 0; 
 		aChoppingUp->currentFrame = 0; 
-		Grass* deleteGrass{};
-		for (auto const& grass : gameLayer->grassList) {
-			if (this->isOverlap(grass)){
-				cout << "Overlap grass" << endl;
-				deleteGrass = grass;
-			}
-		}
-		if(deleteGrass != nullptr)
-			deleteGrass->~Grass();
+		
 	}
 }
 

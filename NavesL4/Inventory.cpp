@@ -7,7 +7,17 @@ Inventory::Inventory() {
 
 
 void Inventory::addItem(Item* item) {
-	items.push_back(item);
+	bool found = false;
+	for (auto const& i : items) {
+		if (i->id._Equal(item->id)) {
+			found = true;
+			i->increment();
+		}
+	}
+	if (!found) {
+		items.push_back(item);
+	}
+	
 }
 
 void Inventory::drawItems() {

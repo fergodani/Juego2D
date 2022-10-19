@@ -25,10 +25,7 @@ void GameLayer::init() {
 
 	audioBackground = new Audio("res/musica_ambiente.mp3", true);
 	//audioBackground->play();
-
-	points = 0;
-	//textPoints = new Text("hola", WIDTH * 0.92, HEIGHT * 0.04, game);
-	//textPoints->content = to_string(points);
+	
 
 	backgroundWateringCan = new Actor("res/water_can.png",
 		WIDTH * 0.05, HEIGHT * 0.05, 16, 16, game);
@@ -36,6 +33,11 @@ void GameLayer::init() {
 		WIDTH * 0.05, HEIGHT * 0.05, 16, 16, game);
 	backgroundHoe = new Actor("res/hoe.png",
 		WIDTH * 0.05, HEIGHT * 0.05, 16, 16, game);
+	backgroundWood = new Actor("res/wood.png",
+		WIDTH * 0.05, HEIGHT * 0.10, 16, 16, game);
+	woodCuantity = 0;
+	textWood = new Text("hola", WIDTH * 0.10, HEIGHT * 0.10, game);
+	textWood->content = to_string(woodCuantity);
 
 	loadMap("res/agua.txt");
 	loadMap("res/terreno.txt");
@@ -107,6 +109,15 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
 		//space->addStaticActor(tile);
+		break;
+	}
+	case 's': {
+		Grass* grass = new Grass(x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		grass->y = grass->y - grass->height / 2;
+		grassList.push_back(grass);
+		//space->addStaticActor(tile);
+		cout << "added grass" << endl;
 		break;
 	}
 	case 'b': {
@@ -339,15 +350,14 @@ void GameLayer::update() {
 	if (grassSpawnTime > 0) {
 		grassSpawnTime--;
 	}
-
-	cout << "Total grass:" << grassList.size() << endl;
 }
 
 void GameLayer::spawnGrass() {
-	if (grassSpawnTime == 0 && grassList.size() < 25) {
+	if (grassSpawnTime == 0 && grassList.size() < 8) {
 		grassSpawnTime = grassSpawnCadence;
-		int rX = (rand() % mapWidth);
-		int rY = (rand() % mapHeight);
+		srand(time(0));
+		int rX = (rand() % (player->x + player->x/2) + player->x/2);
+		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);
 		Grass* grass = new Grass(rX, rY, game);
 		for (auto const& tile : tiles) {
 			if (tile->isOverlap(grass) && tile->canSpawn) {
@@ -384,8 +394,9 @@ void GameLayer::draw() {
 		backgroundHoe->draw();
 	if (player->actualTool == player->watering_can)
 		backgroundWateringCan->draw();
+	backgroundWood->draw();
 	player->inventory->drawItems();
-
+	textWood->draw();
 	SDL_RenderPresent(game->renderer); // Renderiza
 }
 

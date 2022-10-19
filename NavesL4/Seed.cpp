@@ -2,6 +2,7 @@
 
 Seed::Seed(Game* game)
 	: Item("res/seed.png", 50, 50, 16, 16, game, 1, 0) {
+	id = "seed";
 }
 
 void Seed::action() {

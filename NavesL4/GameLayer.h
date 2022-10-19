@@ -63,6 +63,9 @@ public:
 	Actor* backgroundWateringCan;
 	Actor* backgroundHoe;
 	Actor* backgroundAxe;
+	Actor* backgroundWood;
+	Text* textWood;
+	int woodCuantity;
 
 	list<Grass*> grassList;
 	int grassSpawnTime = 0;
