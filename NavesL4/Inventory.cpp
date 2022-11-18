@@ -1,8 +1,14 @@
 #include "Inventory.h"
 
-Inventory::Inventory() {
+Inventory::Inventory(Game* game) {
 	this->money = 0;
 	this->wood = 0;
+	addItem(new Axe(game));
+	addItem(new Hoe(game));
+	addItem(new WateringCan(game));
+	addItem(new Seed(game));
+	selectedItem = items.at(index);
+	frame = new Actor("res/frame.png", selectedItem->x, selectedItem->y, 16, 16, game);
 }
 
 
@@ -21,7 +27,26 @@ void Inventory::addItem(Item* item) {
 }
 
 void Inventory::drawItems() {
+	float gap = 0.15;
 	for (auto item : items) {
-		item->drawIcon();
+		item->x = WIDTH * gap;
+		item->y = HEIGHT * 0.90;
+		item->draw();
+		if (item->id == selectedItem->id) {
+			frame->x = item->x;
+			frame->y = item->y;
+			frame->draw();
+		}
+		gap += 0.1;
 	}
+
+}
+
+void Inventory::action() {
+	selectedItem->action();
+}
+
+void Inventory::nextItem() {
+	int i = ++index % (sizeof(items) / sizeof(int));
+	selectedItem = items.at(i);
 }

@@ -25,6 +25,12 @@
     <Filter Include="Archivos de origen\actores">
       <UniqueIdentifier>{d72f9674-6a1c-47ec-9ac3-e65b9c20e91d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\actores\Items">
+      <UniqueIdentifier>{1bb6b95f-150a-4575-84c9-df52249cd7f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\actores\Items">
+      <UniqueIdentifier>{033a1282-b77b-47ec-acd5-3c0050f988f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -72,17 +78,29 @@
     <ClCompile Include="Grass.cpp">
       <Filter>Archivos de origen\actores</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Archivos de origen\actores</Filter>
-    </ClCompile>
-    <ClCompile Include="Seed.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="MenuLayer.cpp">
       <Filter>Archivos de origen\layers</Filter>
     </ClCompile>
-    <ClCompile Include="Stone.cpp">
+    <ClCompile Include="GridMap.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Stone.cpp">
+      <Filter>Archivos de origen\actores</Filter>
+    </ClCompile>
+    <ClCompile Include="Seed.cpp">
+      <Filter>Archivos de origen\actores\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Archivos de origen\actores\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Axe.cpp">
+      <Filter>Archivos de origen\actores\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Hoe.cpp">
+      <Filter>Archivos de origen\actores\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="WateringCan.cpp">
+      <Filter>Archivos de origen\actores\Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,17 +146,29 @@
     <ClInclude Include="Inventory.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Archivos de encabezado\actores</Filter>
-    </ClInclude>
     <ClInclude Include="Grass.h">
       <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
-    <ClInclude Include="Seed.h">
+    <ClInclude Include="GridMap.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Stone.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\actores</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Archivos de encabezado\actores\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Seed.h">
+      <Filter>Archivos de encabezado\actores\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Axe.h">
+      <Filter>Archivos de encabezado\actores\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Hoe.h">
+      <Filter>Archivos de encabezado\actores\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="WateringCan.h">
+      <Filter>Archivos de encabezado\actores\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

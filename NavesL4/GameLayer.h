@@ -9,6 +9,7 @@
 #include "Grass.h"
 #include "Item.h"
 #include "Stone.h"
+#include "GridMap.h"
 
 #include "Audio.h"
 #include "Space.h" // importar
@@ -44,7 +45,7 @@ public:
 	float scrollY;
 	int mapHeight;
 	int mapWidth;
-	list<Tile*> tiles;
+	//list<Tile*> tiles;
 
 	Audio* audioBackground;
 	Text* textPoints;
@@ -61,9 +62,6 @@ public:
 	int controlMoveY = 0;
 	int controlMoveX = 0;
 
-	Actor* backgroundWateringCan;
-	Actor* backgroundHoe;
-	Actor* backgroundAxe;
 	Actor* backgroundWood;
 	Text* textWood;
 	int woodCuantity;
@@ -83,6 +81,6 @@ public:
 
 	list<Item*> itemsList;
 
-
+	GridMap* gridMap;
 };
 

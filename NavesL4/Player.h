@@ -37,11 +37,6 @@ public:
 	Animation* aWateringUp;
 	Animation* animation; // Referencia a la animación mostrada
 
-	enum tool {axe, watering_can, hoe};
-	int actualTool;
-	void nextTool();
-	void action();
-
 	// Talado
 	void chop();
 	int chopTime = 0;
