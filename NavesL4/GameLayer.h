@@ -8,6 +8,7 @@
 #include "Pad.h"
 #include "Grass.h"
 #include "Item.h"
+#include "Stone.h"
 
 #include "Audio.h"
 #include "Space.h" // importar
@@ -66,11 +67,19 @@ public:
 	Actor* backgroundWood;
 	Text* textWood;
 	int woodCuantity;
+	Actor* backgroundRock;
+	Text* textRock;
+	int rockCuantity;
 
 	list<Grass*> grassList;
 	int grassSpawnTime = 0;
 	int grassSpawnCadence = 5;
 	void spawnGrass();
+
+	list<Stone*> stoneList;
+	int stoneSpawnTime = 0;
+	int stoneSpawnCadence = 5;
+	void spawnStone();
 
 	list<Item*> itemsList;
 

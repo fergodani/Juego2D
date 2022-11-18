@@ -35,9 +35,14 @@ void GameLayer::init() {
 		WIDTH * 0.05, HEIGHT * 0.05, 16, 16, game);
 	backgroundWood = new Actor("res/wood.png",
 		WIDTH * 0.05, HEIGHT * 0.10, 16, 16, game);
+	backgroundRock = new Actor("res/stoneIcon.png",
+		WIDTH * 0.05, HEIGHT * 0.20, 16, 16, game);
 	woodCuantity = 0;
+	rockCuantity = 0;
 	textWood = new Text("hola", WIDTH * 0.10, HEIGHT * 0.10, game);
 	textWood->content = to_string(woodCuantity);
+	textRock = new Text("hola", WIDTH * 0.10, HEIGHT * 0.20, game);
+	textRock->content = to_string(rockCuantity);
 
 	loadMap("res/agua.txt");
 	loadMap("res/terreno.txt");
@@ -88,7 +93,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case 'a': {
-		Tile* tile = new Tile("res/agua.png", x, y, 16, 16, false, game);
+		Tile* tile = new Tile("res/agua.png", x, y, 32, 32, false, game);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		tiles.push_back(tile);
@@ -117,6 +122,20 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		grass->y = grass->y - grass->height / 2;
 		grassList.push_back(grass);
 		//space->addStaticActor(tile);
+		cout << "added grass" << endl;
+		break;
+	}
+	case 'g': {
+		int rX = (rand() + 100);
+		string fileName = "res/stone1.png";
+		if (rX % 2 == 0) {
+			fileName = "res/stone2.png";
+		}
+		Stone* stone = new Stone(fileName, x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		stone->y = stone->y - stone->height / 2;
+		stoneList.push_back(stone);
+		space->addStaticActor(stone);
 		cout << "added grass" << endl;
 		break;
 	}
@@ -346,9 +365,13 @@ void GameLayer::update() {
 	player->update();
 
 	spawnGrass();
+	spawnStone();
 
 	if (grassSpawnTime > 0) {
 		grassSpawnTime--;
+	}
+	if (stoneSpawnTime > 0) {
+		stoneSpawnTime--;
 	}
 }
 
@@ -370,6 +393,29 @@ void GameLayer::spawnGrass() {
 	}
 }
 
+void GameLayer::spawnStone() {
+	if (stoneSpawnTime == 0 && stoneList.size() < 8) {
+		cout << "Stone spawned" << endl;
+		stoneSpawnTime = stoneSpawnCadence;
+		srand(time(0));
+		int rX = (rand() % (player->x + player->x / 2) + player->x / 2);
+		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);
+		string fileName = "res/stone1.png";
+		if (rX % 2 == 0) {
+			fileName = "res/stone2.png";
+		}
+		Stone* stone = new Stone(fileName, rX, rY, game);
+		for (auto const& tile : tiles) {
+			if (tile->isOverlap(stone) && tile->canSpawn) {
+				stoneList.push_back(stone);
+				return;
+			}
+		}
+
+
+	}
+}
+
 void GameLayer::calculateScroll() {
 	scrollX = player->x - WIDTH/2;
 	scrollY = player->y - HEIGHT/2;
@@ -386,6 +432,9 @@ void GameLayer::draw() {
 	for (auto const& grass : grassList) {
 		grass->draw(scrollX, scrollY);
 	}
+	for (auto const& stone : stoneList) {
+		stone->draw(scrollX, scrollY);
+	}
 	player->draw(scrollX, scrollY);
 	// HUD
 	if (player->actualTool == player->axe)
@@ -395,8 +444,11 @@ void GameLayer::draw() {
 	if (player->actualTool == player->watering_can)
 		backgroundWateringCan->draw();
 	backgroundWood->draw();
+	backgroundRock->draw();
 	player->inventory->drawItems();
 	textWood->draw();
+	textRock->draw();
+
 	SDL_RenderPresent(game->renderer); // Renderiza
 }
 

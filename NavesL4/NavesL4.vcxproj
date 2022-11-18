@@ -176,6 +176,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Seed.cpp" />
     <ClCompile Include="Space.cpp" />
+    <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
@@ -195,6 +196,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Seed.h" />
     <ClInclude Include="Space.h" />
+    <ClInclude Include="Stone.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>

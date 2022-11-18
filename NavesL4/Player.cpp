@@ -63,7 +63,7 @@ void Player::update() {
 	// Acabo la animación, no sabemos cual
 	if (endAnimation) {
 		GameLayer* gameLayer = (GameLayer*)game->gameLayer;
-		if (state == game->stateChopping) {
+		if (state == game->statePlowing) {
 			Grass* deleteGrass{};
 			for (auto const& grass : gameLayer->grassList) {
 				if (this->isOverlap(grass)) {
@@ -71,8 +71,20 @@ void Player::update() {
 					deleteGrass = grass;
 				}
 			}
-			if (deleteGrass != nullptr)
+			if (deleteGrass != nullptr) {
 				deleteGrass->~Grass();
+			}
+
+			Stone* deleteStone{};
+			for (auto const& stone : gameLayer->stoneList) {
+				if (this->isOverlap(stone)) {
+					cout << "Overlap stone" << endl;
+					deleteStone = stone;
+				}
+			}
+			if (deleteStone != nullptr)
+				deleteStone->~Stone();
+
 			state = game->stateMoving;
 		}
 		if (state == game->statePlowing)
