@@ -5,6 +5,7 @@
 
 #include "Text.h"
 #include "Tile.h"
+#include "GroundTile.h"
 #include "Pad.h"
 #include "Grass.h"
 #include "Item.h"

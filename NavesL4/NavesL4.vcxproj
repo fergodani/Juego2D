@@ -169,6 +169,7 @@
     <ClCompile Include="GameLayer.cpp" />
     <ClCompile Include="Grass.cpp" />
     <ClCompile Include="GridMap.cpp" />
+    <ClCompile Include="GroundTile.cpp" />
     <ClCompile Include="Hoe.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="GameLayer.h" />
     <ClInclude Include="Grass.h" />
     <ClInclude Include="GridMap.h" />
+    <ClInclude Include="GroundTile.h" />
     <ClInclude Include="Hoe.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />

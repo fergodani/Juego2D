@@ -9,6 +9,7 @@ class Player : public Actor
 {
 public:
 	Player(float x, float y, Game* game);
+	Inventory* inventory;
 	void update();
 	void moveX(float axis);
 	void moveY(float axis);
@@ -52,6 +53,5 @@ public:
 	int waterTime = 0;
 	int waterCadence = 5;
 
-	Inventory* inventory;
 };
 

@@ -102,6 +102,9 @@
     <ClCompile Include="WateringCan.cpp">
       <Filter>Archivos de origen\actores\Items</Filter>
     </ClCompile>
+    <ClCompile Include="GroundTile.cpp">
+      <Filter>Archivos de origen\actores</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="WateringCan.h">
       <Filter>Archivos de encabezado\actores\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundTile.h">
+      <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

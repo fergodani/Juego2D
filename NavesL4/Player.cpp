@@ -90,7 +90,6 @@ void Player::update() {
 			state = game->stateMoving;
 		if (state = game->stateWatering) {
 			state = game->stateMoving;
-			gameLayer->gridMap->getCollisionTile(x, y);
 		}
 	}
 
