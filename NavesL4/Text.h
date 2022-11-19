@@ -5,13 +5,13 @@
 class Text
 {
 public:
-	Text(string content, float x, float y, Game* game);
+	Text(string content, float x, float y, float width, float height, Game* game);
 	void draw();
 	string content; // texto
 	int x;
 	int y;
-	int width;
-	int height;
+	float width;
+	float height;
 	Game* game; // referencia al juego
 };
 

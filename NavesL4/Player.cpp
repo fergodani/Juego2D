@@ -50,8 +50,7 @@ Player::Player(float x, float y, Game* game)
 		384, 48, 2, 8, false, game);
 	animation = aRunningRight;
 
-	actualTool = hoe;
-	inventory = new Inventory();
+	inventory = new Inventory(game);
 }
 
 
@@ -89,8 +88,9 @@ void Player::update() {
 		}
 		if (state == game->statePlowing)
 			state = game->stateMoving;
-		if (state = game->stateWatering)
+		if (state = game->stateWatering) {
 			state = game->stateMoving;
+		}
 	}
 
 	// Establecer orientación
@@ -198,9 +198,6 @@ void Player::update() {
 			waterTime--;
 		}
 	}
-	for (auto const& item : inventory->items) {
-		cout << "Item id: " << item->id << " Cuantity: " << item->cuantity << endl;
-	}
 
 }
 
@@ -254,25 +251,3 @@ void Player::water() {
 	}
 }
 
-void Player::nextTool() {
-	if (actualTool == hoe)
-		actualTool = watering_can;
-	else if (actualTool == watering_can)
-		actualTool = axe;
-	else
-		actualTool = hoe;
-}
-
-void Player::action() {
-	switch (actualTool) {
-		case axe:
-			chop();
-			break;
-		case watering_can:
-			water();
-			break;
-		case hoe:
-			plow();
-			break;
-	}
-}

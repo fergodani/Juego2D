@@ -9,6 +9,7 @@ class Player : public Actor
 {
 public:
 	Player(float x, float y, Game* game);
+	Inventory* inventory;
 	void update();
 	void moveX(float axis);
 	void moveY(float axis);
@@ -37,11 +38,6 @@ public:
 	Animation* aWateringUp;
 	Animation* animation; // Referencia a la animación mostrada
 
-	enum tool {axe, watering_can, hoe};
-	int actualTool;
-	void nextTool();
-	void action();
-
 	// Talado
 	void chop();
 	int chopTime = 0;
@@ -57,6 +53,5 @@ public:
 	int waterTime = 0;
 	int waterCadence = 5;
 
-	Inventory* inventory;
 };
 
