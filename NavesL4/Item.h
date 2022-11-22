@@ -10,6 +10,7 @@ public:
 	int cuantity;
 	float price;
 	string id;
-	void increment();
+	virtual void increment();
+	virtual void decrement();
 };
 

@@ -42,9 +42,10 @@ void GameLayer::init() {
 	//loadMap("res/agua.txt");
 	loadMap("res/terreno.txt");
 	//loadMap("res/hills.txt");
-	loadMap("res/detalles.txt");
 	gridMap->rows = mapHeight / 16;
 	gridMap->columns = mapWidth / 16;
+	loadMap("res/detalles.txt");
+	
 }
 
 void GameLayer::loadMap(string name) {
@@ -117,7 +118,15 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		Grass* grass = new Grass(x, y, game);
 		// modificación para empezar a contar desde el suelo.
 		grass->y = grass->y - grass->height / 2;
-		grassList.push_back(grass);
+
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(grass->x, grass->y, player->orientation));
+		if (tileSelected == NULL)
+			break;
+		grass->x = tileSelected->x;
+		grass->y = tileSelected->y;
+		tileSelected->placeGrass(grass);
+		numberOfGrass++;
+
 		//space->addStaticActor(tile);
 		cout << "added grass" << endl;
 		break;
@@ -131,8 +140,8 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		Stone* stone = new Stone(fileName, x, y, game);
 		// modificación para empezar a contar desde el suelo.
 		stone->y = stone->y - stone->height / 2;
-		stoneList.push_back(stone);
-		space->addStaticActor(stone);
+		//stoneList.push_back(stone);
+		//space->addStaticActor(stone);
 		cout << "added grass" << endl;
 		break;
 	}
@@ -394,7 +403,7 @@ void GameLayer::update() {
 	player->update();
 
 	spawnGrass();
-	spawnStone();
+	//spawnStone();
 
 	if (grassSpawnTime > 0) {
 		grassSpawnTime--;
@@ -405,25 +414,23 @@ void GameLayer::update() {
 }
 
 void GameLayer::spawnGrass() {
-	if (grassSpawnTime == 0 && grassList.size() < 8) {
+	if (grassSpawnTime == 0 && numberOfGrass< 8) {
 		grassSpawnTime = grassSpawnCadence;
 		srand(time(0));
 		int rX = (rand() % (player->x + player->x/2) + player->x/2);
 		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);
-		Grass* grass = new Grass(rX, rY, game);
-		for (auto const& tile : gridMap->tiles) {
-			if (tile->isOverlap(grass) && tile->canSpawn) {
-				grassList.push_back(grass);
-				return;
-			}
-		}
-		
-
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(rX, rY, player->orientation));
+		if (tileSelected == NULL)
+			return;
+		Grass* grass = new Grass(tileSelected->x, tileSelected->y, game);
+		tileSelected->placeGrass(grass);
+		numberOfGrass++;
+		cout << "Grass Spawned at x: " << tileSelected->x << " y: " << tileSelected->y << endl;
 	}
 }
 
 void GameLayer::spawnStone() {
-	if (stoneSpawnTime == 0 && stoneList.size() < 8) {
+	if (stoneSpawnTime == 0 && stoneList.size() < -3) {
 		cout << "Stone spawned" << endl;
 		stoneSpawnTime = stoneSpawnCadence;
 		srand(time(0));
@@ -465,9 +472,6 @@ void GameLayer::draw() {
 		tile->draw(scrollX, scrollY);
 	}
 	
-	for (auto const& grass : grassList) {
-		grass->draw(scrollX, scrollY);
-	}
 	for (auto const& stone : stoneList) {
 		stone->draw(scrollX, scrollY);
 	}

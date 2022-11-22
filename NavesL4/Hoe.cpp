@@ -11,7 +11,9 @@ void Hoe::action() {
 	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 	gameLayer->player->state = game->statePlowing;
 	gameLayer->player->plow();
-	GroundTile* tileSelected = (GroundTile*)gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation);
-	cout << tileSelected->filename << endl;
+	GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));
+	if (tileSelected == NULL)
+		return;
+	//cout << tileSelected->filename << endl;
 	tileSelected->plow();
 }

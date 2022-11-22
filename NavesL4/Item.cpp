@@ -14,3 +14,7 @@ void Item::action() {
 void Item::increment() {
 	cuantity++;
 }
+
+void Item::decrement() {
+	cuantity--;
+}

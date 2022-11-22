@@ -16,4 +16,43 @@ void GroundTile::draw(float scrollX, float scrollY) {
 	if (isPlowed == true) {
 		groundPlowed->draw(scrollX, scrollY);
 	}
+	if (isGrassPlaced == true) {
+		placedGrass->draw(scrollX, scrollY);
+	}
+	if (isStonePlaced == true) {
+		placedStone->draw(scrollX, scrollY);
+	}
+	if (isSeedPlanted == true) {
+		plantedSeed->draw(scrollX, scrollY);
+	}
+}
+
+void GroundTile::placeGrass(Grass* grass) {
+	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false) {
+		isGrassPlaced = true;
+		placedGrass = grass;
+	}
+}
+
+void GroundTile::recolectGrass() {
+	if (isGrassPlaced == true) {
+		isGrassPlaced = false;
+		placedGrass->~Grass();
+	}
+}
+
+void GroundTile::placeStone(Stone* stone) {
+	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false) {
+		isStonePlaced = true;
+		placedStone = stone;
+	}
+}
+
+void GroundTile::plant() {
+	if(isPlowed == true) {
+		plantedSeed = new Seed(game);
+		plantedSeed->x = this->x;
+		plantedSeed->y = this->y;
+		isSeedPlanted = true;
+	}
 }

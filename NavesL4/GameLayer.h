@@ -70,7 +70,7 @@ public:
 	Text* textRock;
 	int rockCuantity;
 
-	list<Grass*> grassList;
+	int numberOfGrass = 0;
 	int grassSpawnTime = 0;
 	int grassSpawnCadence = 5;
 	void spawnGrass();

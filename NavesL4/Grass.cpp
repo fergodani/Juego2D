@@ -10,6 +10,6 @@ Grass::Grass(float x, float y, Game* game)
 
 Grass::~Grass() {
 	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
-	gameLayer->grassList.remove(this);
 	gameLayer->player->inventory->addItem(new Seed(game));
+	gameLayer->numberOfGrass--;
 }

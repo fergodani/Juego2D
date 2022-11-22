@@ -7,6 +7,8 @@ public:
 	Seed(Game* game);
 	Text* textCuantity;
 	void action() override;
+	void increment() override;
+	void decrement() override;
 	void draw(float scrollX = 0, float scrollY = 0) override;
 };
 
