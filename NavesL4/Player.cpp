@@ -202,11 +202,11 @@ void Player::update() {
 }
 
 void Player::moveX(float axis) {
-	vx = axis * 5;
+	vx = axis * 3.5;
 }
 
 void Player::moveY(float axis) {
-	vy = axis * 5;
+	vy = axis * 3.5;
 }
 
 void Player::draw(float scrollX, float scrollY) {

@@ -4,13 +4,14 @@
 class GridMap
 {
 public:
-	GridMap();
+	GridMap(Game* game);
+	Game* game;
 	list<Tile*> tiles;
 	list<Tile*> waterTiles;
 	list<Tile*> detailTiles;
 	//void addTile(Tile* tile);
 	//void addWaterTile(Tile* tile);
-	Tile* getCollisionTile(float x, float y);
+	Tile* getCollisionTile(float x, float y, int orientation);
 	int rows;
 	int columns;
 };

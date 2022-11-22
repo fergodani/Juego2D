@@ -8,7 +8,7 @@ GameLayer::GameLayer(Game* game)
 		WIDTH, HEIGHT, game);
 
 	gamePad = SDL_GameControllerOpen(0);
-	gridMap = new GridMap();
+	gridMap = new GridMap(game);
 	init();
 }
 
@@ -186,13 +186,20 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case '1': {
 		GroundTile* tile = new GroundTile(x, y, 16, 16, true, game);
+		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
+		waterTile->y = waterTile->y - waterTile->height / 2;
+		gridMap->waterTiles.push_back(waterTile);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
+		
 		gridMap->tiles.push_back(tile);
 		break;
 	}
 	case '2': {
 		Tile* tile = new Tile("res/hierba2.png", x, y, 16, 16, false,  game);
+		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
+		waterTile->y = waterTile->y - waterTile->height / 2;
+		gridMap->waterTiles.push_back(waterTile);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
@@ -200,6 +207,9 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case '3': {
 		Tile* tile = new Tile("res/hierba3.png", x, y, 16, 16, false, game);
+		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
+		waterTile->y = waterTile->y - waterTile->height / 2;
+		gridMap->waterTiles.push_back(waterTile);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
@@ -207,6 +217,9 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case '4': {
 		Tile* tile = new Tile("res/hierba4.png", x, y, 16, 16, false, game);
+		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
+		waterTile->y = waterTile->y - waterTile->height / 2;
+		gridMap->waterTiles.push_back(waterTile);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
@@ -214,6 +227,9 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case '5': {
 		Tile* tile = new Tile("res/hierba5.png", x, y, 16, 16, false, game);
+		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
+		waterTile->y = waterTile->y - waterTile->height / 2;
+		gridMap->waterTiles.push_back(waterTile);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
@@ -221,6 +237,9 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case '6': {
 		Tile* tile = new Tile("res/hierba6.png", x, y, 16, 16, false, game);
+		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
+		waterTile->y = waterTile->y - waterTile->height / 2;
+		gridMap->waterTiles.push_back(waterTile);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
@@ -228,6 +247,9 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case '7': {
 		Tile* tile = new Tile("res/hierba7.png", x, y, 16, 16, false, game);
+		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
+		waterTile->y = waterTile->y - waterTile->height / 2;
+		gridMap->waterTiles.push_back(waterTile);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
@@ -235,6 +257,9 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case '8': {
 		Tile* tile = new Tile("res/hierba8.png", x, y, 16, 16, false, game);
+		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
+		waterTile->y = waterTile->y - waterTile->height / 2;
+		gridMap->waterTiles.push_back(waterTile);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
@@ -242,6 +267,9 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case '9': {
 		Tile* tile = new Tile("res/hierba9.png", x, y, 16, 16, false, game);
+		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
+		waterTile->y = waterTile->y - waterTile->height / 2;
+		gridMap->waterTiles.push_back(waterTile);
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
@@ -425,6 +453,9 @@ void GameLayer::calculateScroll() {
 
 void GameLayer::draw() {
 	calculateScroll();
+	for (auto const& tile : gridMap->waterTiles) {
+		tile->draw(scrollX, scrollY);
+	}
 
 	for (auto const& tile : gridMap->tiles) {
 		tile->draw(scrollX, scrollY);
