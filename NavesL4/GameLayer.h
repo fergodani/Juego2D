@@ -82,5 +82,7 @@ public:
 	list<Actor*> actorList;
 
 	GridMap* gridMap;
+	Actor* tileGuide;
+	bool isGuide = false;
 };
 

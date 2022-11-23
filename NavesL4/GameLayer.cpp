@@ -19,6 +19,8 @@ void GameLayer::init() {
 	buttonJump = new Actor("res/boton_salto.png", WIDTH * 0.9, HEIGHT * 0.55, 100, 100, game);
 	buttonShoot = new Actor("res/boton_disparo.png", WIDTH * 0.75, HEIGHT * 0.83, 100, 100, game);
 
+	tileGuide = new Actor("res/mark.png", 0, 0, 16, 16, game);
+
 	space = new Space(0);
 	scrollX = 0;
 	scrollY = 0;
@@ -417,6 +419,9 @@ void GameLayer::update() {
 
 	space->update();
 	player->update();
+	Tile* tile = gridMap->getCollisionTile(player->x, player->y, player->orientation);
+	tileGuide->x = tile->x;
+	tileGuide->y = tile->y;
 
 	spawnGrass();
 	spawnStone();
@@ -496,8 +501,11 @@ void GameLayer::draw() {
 	}
 	
 	player->draw(scrollX, scrollY);
-	// HUD
 
+	if(isGuide == true)
+		tileGuide->draw(scrollX, scrollY);
+
+	// HUD
 	backgroundWood->draw();
 	backgroundRock->draw();
 	backgroundCoin->draw();
@@ -635,8 +643,8 @@ void GameLayer::keysToControls(SDL_Event event) {
 		case SDLK_SPACE: // dispara
 			controlAction = true;
 			break;
-		case SDLK_e:
-			controlPlow = true;
+		case SDLK_f:
+			isGuide = !isGuide;
 			break;
 		case SDLK_q:
 			controlWater = true;
