@@ -310,6 +310,14 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		gridMap->tiles.push_back(tile);
 		break;
 	}
+	case '&': {
+		Actor* actor = new Actor("res/work_station.png", x, y, 32, 32, game);
+		// modificación para empezar a contar desde el suelo.
+		actor->y = actor->y - actor->height / 2;
+		actorList.push_back(actor);
+		space->addStaticActor(actor);
+		break;
+	}
 	}
 }
 
@@ -411,7 +419,7 @@ void GameLayer::update() {
 	player->update();
 
 	spawnGrass();
-	//spawnStone();
+	spawnStone();
 
 	gridMap->update();
 
@@ -481,6 +489,10 @@ void GameLayer::draw() {
 
 	for (auto const& tile : gridMap->detailTiles) {
 		tile->draw(scrollX, scrollY);
+	}
+
+	for (auto const& actor : actorList) {
+		actor->draw(scrollX, scrollY);
 	}
 	
 	player->draw(scrollX, scrollY);

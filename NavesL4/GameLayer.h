@@ -79,7 +79,7 @@ public:
 	int stoneSpawnCadence = 5;
 	void spawnStone();
 
-	list<Item*> itemsList;
+	list<Actor*> actorList;
 
 	GridMap* gridMap;
 };
