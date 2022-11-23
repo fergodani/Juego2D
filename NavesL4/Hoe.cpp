@@ -6,17 +6,23 @@ Hoe::Hoe(Game* game)
 	id = "hoe";
 }
 
-void Hoe::action() {
-	cout << "Hoe action" << endl;
+void Hoe::beginAction() {
+	cout << "Hoe action begins" << endl;
 	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 	gameLayer->player->state = game->statePlowing;
 	gameLayer->player->plow();
+}
+
+void Hoe::endAction() {
+	cout << "Hoe action ends" << endl;
+	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 	GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));
 	if (tileSelected == NULL)
 		return;
 	//cout << tileSelected->filename << endl;
 	if (tileSelected->isStonePlaced == true) {
 		tileSelected->recolectStone();
-	}else
+	}
+	else
 		tileSelected->plow();
 }

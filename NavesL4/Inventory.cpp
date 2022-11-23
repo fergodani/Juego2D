@@ -42,8 +42,12 @@ void Inventory::drawItems() {
 
 }
 
-void Inventory::action() {
-	selectedItem->action();
+void Inventory::beginAction() {
+	selectedItem->beginAction();
+}
+
+void Inventory::endAction() {
+	selectedItem->endAction();
 }
 
 void Inventory::nextItem() {

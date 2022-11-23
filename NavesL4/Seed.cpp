@@ -8,7 +8,7 @@ Seed::Seed(Game* game)
 	textCuantity->content = to_string(cuantity);
 }
 
-void Seed::action() {
+void Seed::beginAction() {
 	if (cuantity > 0) {
 		GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));

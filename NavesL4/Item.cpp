@@ -7,8 +7,12 @@ Item::Item(string fileName, float x, float y, float width, float height, Game* g
 	this->price = price;
 }
 
-void Item::action() {
-	// TODO
+void Item::beginAction() {
+
+}
+
+void Item::endAction() {
+
 }
 
 void Item::increment() {

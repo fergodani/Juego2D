@@ -404,7 +404,7 @@ void GameLayer::processControls() {
 	}
 
 	if (controlAction == true) {
-		player->inventory->action();
+		player->inventory->beginAction();
 		controlAction = false;
 	}
 

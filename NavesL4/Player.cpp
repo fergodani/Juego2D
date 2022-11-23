@@ -53,7 +53,6 @@ Player::Player(float x, float y, Game* game)
 	inventory = new Inventory(game);
 }
 
-
 void Player::update() {
 
 	bool endAnimation = animation->update();
@@ -61,7 +60,7 @@ void Player::update() {
 
 	// Acabo la animación, no sabemos cual
 	if (endAnimation) {
-		GameLayer* gameLayer = (GameLayer*)game->gameLayer;
+		inventory->endAction();
 		if (state == game->statePlowing) {
 			state = game->stateMoving;
 		}

@@ -4,7 +4,8 @@ class Hoe : public Item
 {
 public:
 	Hoe(Game* game);
-	void action() override;
+	void beginAction() override;
+	void endAction() override;
 };
 
 

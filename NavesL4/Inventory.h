@@ -18,7 +18,8 @@ public:
 	Item* selectedItem;
 	void addItem(Item* item);
 	void drawItems();
-	void action();
+	void beginAction();
+	void endAction();
 	void nextItem();
 	void incrementMoney();
 	void decrementMoney(int value);
