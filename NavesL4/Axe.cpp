@@ -5,9 +5,20 @@ Axe::Axe(Game* game)
 	id = "axe";
 }
 
-void Axe::action() {
-	cout << "Axe action" << endl;
+void Axe::beginAction() {
+	cout << "Axe action begins" << endl;
 	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 	gameLayer->player->state = game->stateChopping;
 	gameLayer->player->chop();
+}
+
+void Axe::endAction() {
+	cout << "Axe action ends" << endl;
+	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
+	GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));
+	if (tileSelected == NULL)
+		return;
+	//cout << tileSelected->filename << endl;
+	if (tileSelected->isGrassPlaced == true)
+		tileSelected->recolectGrass();
 }

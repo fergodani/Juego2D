@@ -4,6 +4,7 @@ class WateringCan : public Item
 {
 public:
 	WateringCan(Game* game);
-	void action() override;
+	void beginAction() override;
+	void endAction() override;
 };
 

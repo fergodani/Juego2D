@@ -1,4 +1,5 @@
 #include "Seed.h"
+#include "GameLayer.h"
 
 Seed::Seed(Game* game)
 	: Item("res/seed.png", WIDTH * 0.5, HEIGHT * 0.96, 16, 16, game, 0, 0) {
@@ -7,9 +8,16 @@ Seed::Seed(Game* game)
 	textCuantity->content = to_string(cuantity);
 }
 
-void Seed::action() {
-	// TODO: plantarlas en el suelo
-	cout << "Seed action" << endl;
+void Seed::beginAction() {
+	if (cuantity > 0) {
+		GameLayer* gameLayer = (GameLayer*)game->gameLayer;
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));
+		if (tileSelected == NULL || tileSelected->isPlowed == false || tileSelected->isCropPlanted == true)
+			return;
+		tileSelected->plant();
+		decrement();
+		cout << "Seed planted" << endl;
+	}
 }
 
 void Seed::draw(float scrollX, float scrollY) {
@@ -17,4 +25,14 @@ void Seed::draw(float scrollX, float scrollY) {
 	textCuantity->y = this->y + this->height/2;
 	Item::draw();
 	textCuantity->draw();
+}
+
+void Seed::increment() {
+	cuantity++;
+	textCuantity->content = to_string(cuantity);
+}
+
+void Seed::decrement() {
+	cuantity--;
+	textCuantity->content = to_string(cuantity);
 }

@@ -5,9 +5,18 @@ WateringCan::WateringCan(Game* game)
 	id = "water_can";
 }
 
-void WateringCan::action() {
-	cout << "Water can action" << endl;
+void WateringCan::beginAction() {
+	cout << "Water can action begins" << endl;
 	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 	gameLayer->player->state = game->stateWatering;
 	gameLayer->player->water();
+}
+
+void WateringCan::endAction() {
+	cout << "Water can action ends" << endl;
+	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
+	GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));
+	if (tileSelected == NULL)
+		return;
+	tileSelected->water();
 }

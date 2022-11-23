@@ -53,7 +53,6 @@ Player::Player(float x, float y, Game* game)
 	inventory = new Inventory(game);
 }
 
-
 void Player::update() {
 
 	bool endAnimation = animation->update();
@@ -61,29 +60,8 @@ void Player::update() {
 
 	// Acabo la animación, no sabemos cual
 	if (endAnimation) {
-		GameLayer* gameLayer = (GameLayer*)game->gameLayer;
+		inventory->endAction();
 		if (state == game->statePlowing) {
-			Grass* deleteGrass{};
-			for (auto const& grass : gameLayer->grassList) {
-				if (this->isOverlap(grass)) {
-					cout << "Overlap grass" << endl;
-					deleteGrass = grass;
-				}
-			}
-			if (deleteGrass != nullptr) {
-				deleteGrass->~Grass();
-			}
-
-			Stone* deleteStone{};
-			for (auto const& stone : gameLayer->stoneList) {
-				if (this->isOverlap(stone)) {
-					cout << "Overlap stone" << endl;
-					deleteStone = stone;
-				}
-			}
-			if (deleteStone != nullptr)
-				deleteStone->~Stone();
-
 			state = game->stateMoving;
 		}
 		if (state == game->statePlowing)
@@ -202,11 +180,17 @@ void Player::update() {
 }
 
 void Player::moveX(float axis) {
-	vx = axis * 3.5;
+	if (state == game->stateMoving)
+		vx = axis * 5;
+	else
+		vx = 0;
 }
 
 void Player::moveY(float axis) {
-	vy = axis * 3.5;
+	if (state == game->stateMoving)
+		vy = axis * 5;
+	else
+		vy = 0;
 }
 
 void Player::draw(float scrollX, float scrollY) {

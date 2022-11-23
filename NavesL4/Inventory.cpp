@@ -42,11 +42,31 @@ void Inventory::drawItems() {
 
 }
 
-void Inventory::action() {
-	selectedItem->action();
+void Inventory::beginAction() {
+	selectedItem->beginAction();
+}
+
+void Inventory::endAction() {
+	selectedItem->endAction();
 }
 
 void Inventory::nextItem() {
 	int i = ++index % (sizeof(items) / sizeof(int));
 	selectedItem = items.at(i);
+}
+
+void Inventory::incrementMoney() {
+	money++;
+}
+
+void Inventory::decrementMoney(int value) {
+	money -= value;
+}
+
+void Inventory::incrementStone() {
+	stone++;
+}
+
+void Inventory::decrementStone(int value) {
+	stone -= value;
 }

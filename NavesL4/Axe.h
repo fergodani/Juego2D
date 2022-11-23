@@ -4,6 +4,7 @@ class Axe : public Item
 {
 public:
 	Axe(Game* game);
-	void action() override;
+	void beginAction() override;
+	void endAction() override;
 };
 

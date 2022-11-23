@@ -49,9 +49,6 @@ public:
 	//list<Tile*> tiles;
 
 	Audio* audioBackground;
-	Text* textPoints;
-	int points;
-	int newEnemyTime = 0;
 	Player* player;
 
 	bool controlContinue = false;
@@ -69,18 +66,20 @@ public:
 	Actor* backgroundRock;
 	Text* textRock;
 	int rockCuantity;
+	Actor* backgroundCoin;
+	Text* textCoin;
 
-	list<Grass*> grassList;
+	int numberOfGrass = 0;
 	int grassSpawnTime = 0;
 	int grassSpawnCadence = 5;
 	void spawnGrass();
 
-	list<Stone*> stoneList;
+	int numberOfStone = 0;
 	int stoneSpawnTime = 0;
 	int stoneSpawnCadence = 5;
 	void spawnStone();
 
-	list<Item*> itemsList;
+	list<Actor*> actorList;
 
 	GridMap* gridMap;
 };

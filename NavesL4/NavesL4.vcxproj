@@ -165,6 +165,7 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Axe.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Crop.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameLayer.cpp" />
     <ClCompile Include="Grass.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Axe.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Crop.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameLayer.h" />
     <ClInclude Include="Grass.h" />
