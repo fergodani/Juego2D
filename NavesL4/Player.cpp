@@ -7,47 +7,48 @@ Player::Player(float x, float y, Game* game)
 
 	orientation = game->orientationRight;
 	state = game->stateMoving;
+	int updateFrecuence = 1;
 
 	aRunningRight = new Animation("res/playerrun3.png", width, height,
-		384, 48, 2, 8, true, game);
+		384, 48, updateFrecuence, 8, true, game);
 	aRunningLeft = new Animation("res/playerrun4.png", width, height,
-		384, 48, 2, 8, true, game);
+		384, 48, updateFrecuence, 8, true, game);
 	aRunningDown = new Animation("res/playerrun1.png", width, height,
-		384, 48, 2, 8, true, game);
+		384, 48, updateFrecuence, 8, true, game);
 	aRunningUp = new Animation("res/playerrun2.png", width, height,
-		384, 48, 2, 8, true, game);
+		384, 48, updateFrecuence, 8, true, game);
 	aIdleRight = new Animation("res/playeridle4.png", width, height,
-		384, 48, 2, 8, true, game);
+		384, 48, updateFrecuence, 8, true, game);
 	aIdleLeft = new Animation("res/playeridle3.png", width, height,
-		384, 48, 2, 8, true, game);
+		384, 48, updateFrecuence, 8, true, game);
 	aIdleDown = new Animation("res/playeridle1.png", width, height,
-		384, 48, 2, 8, true, game);
+		384, 48, updateFrecuence, 8, true, game);
 	aIdleUp = new Animation("res/playeridle2.png", width, height,
-		384, 48, 2, 8, true, game);
+		384, 48, updateFrecuence, 8, true, game);
 	aChoppingDown = new Animation("res/chop1.png", width, height,
-		384, 48, 2, 8, false, game);
+		384, 48, updateFrecuence, 8, false, game);
 	aChoppingUp = new Animation("res/chop2.png", width, height,
-		384, 48, 2, 8, false, game);
+		384, 48, updateFrecuence, 8, false, game);
 	aChoppingLeft = new Animation("res/chop3.png", width, height,
-		384, 48, 2, 8, false, game);
+		384, 48, updateFrecuence, 8, false, game);
 	aChoppingRight = new Animation("res/chop4.png", width, height,
-		384, 48, 2, 8, false, game);
+		384, 48, updateFrecuence, 8, false, game);
 	aPlowingRight = new Animation("res/arar4.png", width, height,
-		384, 48, 2, 8, false, game);
+		384, 48, updateFrecuence, 8, false, game);
 	aPlowingLeft = new Animation("res/arar3.png", width, height,
-		384, 48, 2, 8, false, game);
+		384, 48, updateFrecuence, 8, false, game);
 	aPlowingDown = new Animation("res/arar1.png", width, height,
-		384, 48, 2, 8, false, game);
+		384, 48, updateFrecuence, 8, false, game);
 	aPlowingUp = new Animation("res/arar2.png", width, height,
-		384, 48, 2, 8, false, game);
+		384, 48, updateFrecuence, 8, false, game);
 	aWateringRight = new Animation("res/watering4.png", width, height,
-		384, 48, 2, 8, false, game);
+		384, 48, updateFrecuence, 8, false, game);
 	aWateringLeft = new Animation("res/watering3.png", width, height,
-		384, 48, 2, 8, false, game);
+		384, 48, updateFrecuence, 8, false, game);
 	aWateringDown = new Animation("res/watering1.png", width, height,
-		384, 48, 2, 8, false, game);
+		384, 48, updateFrecuence, 8, false, game);
 	aWateringUp = new Animation("res/watering2.png", width, height,
-		384, 48, 2, 8, false, game);
+		384, 48, updateFrecuence, 8, false, game);
 	animation = aRunningRight;
 
 	inventory = new Inventory(game);
