@@ -181,11 +181,17 @@ void Player::update() {
 }
 
 void Player::moveX(float axis) {
-	vx = axis * 5;
+	if (state == game->stateMoving)
+		vx = axis * 5;
+	else
+		vx = 0;
 }
 
 void Player::moveY(float axis) {
-	vy = axis * 5;
+	if (state == game->stateMoving)
+		vy = axis * 5;
+	else
+		vy = 0;
 }
 
 void Player::draw(float scrollX, float scrollY) {

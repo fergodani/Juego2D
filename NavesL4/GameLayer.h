@@ -49,9 +49,6 @@ public:
 	//list<Tile*> tiles;
 
 	Audio* audioBackground;
-	Text* textPoints;
-	int points;
-	int newEnemyTime = 0;
 	Player* player;
 
 	bool controlContinue = false;
@@ -69,6 +66,8 @@ public:
 	Actor* backgroundRock;
 	Text* textRock;
 	int rockCuantity;
+	Actor* backgroundCoin;
+	Text* textCoin;
 
 	int numberOfGrass = 0;
 	int grassSpawnTime = 0;

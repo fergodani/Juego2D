@@ -31,12 +31,16 @@ void GameLayer::init() {
 		WIDTH * 0.05, HEIGHT * 0.10, 16, 16, game);
 	backgroundRock = new Actor("res/stoneIcon.png",
 		WIDTH * 0.05, HEIGHT * 0.20, 16, 16, game);
+	backgroundCoin = new Actor("res/coin.png",
+		WIDTH * 0.05, HEIGHT * 0.30, 16, 16, game);
 	woodCuantity = 0;
 	rockCuantity = 0;
 	textWood = new Text("hola", WIDTH * 0.10, HEIGHT * 0.10, 14, 33, game);
 	textWood->content = to_string(woodCuantity);
 	textRock = new Text("hola", WIDTH * 0.10, HEIGHT * 0.20, 14, 33, game);
 	textRock->content = to_string(rockCuantity);
+	textCoin = new Text("hola", WIDTH * 0.10, HEIGHT * 0.30, 14, 33, game);
+	
 
 
 	//loadMap("res/agua.txt");
@@ -45,7 +49,7 @@ void GameLayer::init() {
 	gridMap->rows = mapHeight / 16;
 	gridMap->columns = mapWidth / 16;
 	loadMap("res/detalles.txt");
-	
+	textCoin->content = to_string(player->inventory->money);
 }
 
 void GameLayer::loadMap(string name) {
@@ -370,10 +374,6 @@ void GameLayer::processControls() {
 		player->moveY(0);
 	}
 
-	if (controlChop == true) {
-		player->chop();
-	}
-
 	if (controlPlow == true) {
 		player->plow();
 	}
@@ -404,6 +404,10 @@ void GameLayer::update() {
 
 	spawnGrass();
 	//spawnStone();
+
+	gridMap->update();
+
+	
 
 	if (grassSpawnTime > 0) {
 		grassSpawnTime--;
@@ -480,9 +484,11 @@ void GameLayer::draw() {
 
 	backgroundWood->draw();
 	backgroundRock->draw();
+	backgroundCoin->draw();
 	player->inventory->drawItems();
 	textWood->draw();
 	textRock->draw();
+	textCoin->draw();
 
 	SDL_RenderPresent(game->renderer); // Renderiza
 }

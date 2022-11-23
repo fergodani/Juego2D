@@ -19,6 +19,8 @@ public:
 	void drawItems();
 	void action();
 	void nextItem();
+	void incrementMoney();
+	void decrementMoney(int value);
 	int index = 0;
 	Actor* frame;
 };

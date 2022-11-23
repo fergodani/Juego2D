@@ -1,4 +1,5 @@
 #include "GridMap.h"
+#include "GroundTile.h"
 GridMap::GridMap(Game* game) {
 	this->game = game;
 }
@@ -28,4 +29,13 @@ Tile* GridMap::getCollisionTile(float x, float y, int orientation) {
 		count++;
 	}
 	return tileSelected;
+}
+
+void GridMap::update() {
+	for (auto const& tile : tiles) {
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(tile);
+		if (tileSelected == NULL)
+			continue;
+		tileSelected->update();
+	}
 }

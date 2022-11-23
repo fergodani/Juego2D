@@ -50,3 +50,11 @@ void Inventory::nextItem() {
 	int i = ++index % (sizeof(items) / sizeof(int));
 	selectedItem = items.at(i);
 }
+
+void Inventory::incrementMoney() {
+	money++;
+}
+
+void Inventory::decrementMoney(int value) {
+	money -= value;
+}

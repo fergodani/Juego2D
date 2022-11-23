@@ -10,4 +10,8 @@ void WateringCan::action() {
 	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 	gameLayer->player->state = game->stateWatering;
 	gameLayer->player->water();
+	GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));
+	if (tileSelected == NULL)
+		return;
+	tileSelected->water();
 }

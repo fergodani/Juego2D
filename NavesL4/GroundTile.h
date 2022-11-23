@@ -1,7 +1,7 @@
 #pragma once
 #include "Tile.h"
 #include "Grass.h"
-#include "Seed.h"
+#include "Crop.h"
 #include "Stone.h"
 
 class GroundTile : public Tile
@@ -14,7 +14,7 @@ public:
 	void plant();
 	enum GroundState {normal, plowed, watered};
 	Tile* groundPlowed;
-	Seed* plantedSeed;
+	Crop* plantedCrop;
 	Grass* placedGrass;
 	Stone* placedStone;
 	void placeStone(Stone* stone);
@@ -23,6 +23,10 @@ public:
 	bool isPlowed = false;
 	bool isGrassPlaced = false;
 	bool isStonePlaced = false;
-	bool isSeedPlanted = false;
+	bool isCropPlanted = false;
+	bool isWatered = false;
+	int wateredTime = 0;
+	int wateredCadence = 200;
+	void update();
 };
 

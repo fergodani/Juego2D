@@ -22,8 +22,8 @@ void GroundTile::draw(float scrollX, float scrollY) {
 	if (isStonePlaced == true) {
 		placedStone->draw(scrollX, scrollY);
 	}
-	if (isSeedPlanted == true) {
-		plantedSeed->draw(scrollX, scrollY);
+	if (isCropPlanted == true) {
+		plantedCrop->draw(scrollX, scrollY);
 	}
 }
 
@@ -50,9 +50,28 @@ void GroundTile::placeStone(Stone* stone) {
 
 void GroundTile::plant() {
 	if(isPlowed == true) {
-		plantedSeed = new Seed(game);
-		plantedSeed->x = this->x;
-		plantedSeed->y = this->y;
-		isSeedPlanted = true;
+		plantedCrop = new Crop(this->x, this->y - this->height/2 + 3, game);
+		isCropPlanted = true;
+	}
+}
+
+void GroundTile::water() {
+	if (isWatered == false && isPlowed == true) {
+		isWatered = true;
+		wateredTime = wateredCadence;
+		groundPlowed->texture = game->getTexture("res/plowed_watered.png");
+	}
+}
+
+void GroundTile::update() {
+	if (isWatered == true) {
+		if (isCropPlanted == true)
+			plantedCrop->update();
+		if (wateredTime > 0)
+			wateredTime--;
+		else {
+			isWatered = false;
+			groundPlowed->texture = game->getTexture("res/plowed.png");
+		}
 	}
 }

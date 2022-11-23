@@ -9,13 +9,15 @@ Seed::Seed(Game* game)
 }
 
 void Seed::action() {
-	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
-	GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));
-	if (tileSelected == NULL || tileSelected->isPlowed == false)
-		return;
-	tileSelected->plant();
-
-	cout << "Seed planted" << endl;
+	if (cuantity > 0) {
+		GameLayer* gameLayer = (GameLayer*)game->gameLayer;
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));
+		if (tileSelected == NULL || tileSelected->isPlowed == false)
+			return;
+		tileSelected->plant();
+		decrement();
+		cout << "Seed planted" << endl;
+	}
 }
 
 void Seed::draw(float scrollX, float scrollY) {
