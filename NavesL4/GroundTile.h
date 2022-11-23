@@ -20,6 +20,7 @@ public:
 	void placeStone(Stone* stone);
 	void placeGrass(Grass* grass);
 	void recolectGrass();
+	void recolectStone();
 	bool isPlowed = false;
 	bool isGrassPlaced = false;
 	bool isStonePlaced = false;

@@ -58,3 +58,11 @@ void Inventory::incrementMoney() {
 void Inventory::decrementMoney(int value) {
 	money -= value;
 }
+
+void Inventory::incrementStone() {
+	stone++;
+}
+
+void Inventory::decrementStone(int value) {
+	stone -= value;
+}

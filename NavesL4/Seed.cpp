@@ -12,7 +12,7 @@ void Seed::action() {
 	if (cuantity > 0) {
 		GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));
-		if (tileSelected == NULL || tileSelected->isPlowed == false)
+		if (tileSelected == NULL || tileSelected->isPlowed == false || tileSelected->isCropPlanted == true)
 			return;
 		tileSelected->plant();
 		decrement();

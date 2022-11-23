@@ -15,5 +15,8 @@ void Hoe::action() {
 	if (tileSelected == NULL)
 		return;
 	//cout << tileSelected->filename << endl;
-	tileSelected->plow();
+	if (tileSelected->isStonePlaced == true) {
+		tileSelected->recolectStone();
+	}else
+		tileSelected->plow();
 }

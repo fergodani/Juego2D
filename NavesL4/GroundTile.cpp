@@ -41,6 +41,13 @@ void GroundTile::recolectGrass() {
 	}
 }
 
+void GroundTile::recolectStone() {
+	if (isStonePlaced == true) {
+		isStonePlaced = false;
+		placedStone->~Stone();
+	}
+}
+
 void GroundTile::placeStone(Stone* stone) {
 	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false) {
 		isStonePlaced = true;

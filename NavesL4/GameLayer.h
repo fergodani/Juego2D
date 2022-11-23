@@ -74,7 +74,7 @@ public:
 	int grassSpawnCadence = 5;
 	void spawnGrass();
 
-	list<Stone*> stoneList;
+	int numberOfStone = 0;
 	int stoneSpawnTime = 0;
 	int stoneSpawnCadence = 5;
 	void spawnStone();

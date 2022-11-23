@@ -33,12 +33,10 @@ void GameLayer::init() {
 		WIDTH * 0.05, HEIGHT * 0.20, 16, 16, game);
 	backgroundCoin = new Actor("res/coin.png",
 		WIDTH * 0.05, HEIGHT * 0.30, 16, 16, game);
-	woodCuantity = 0;
-	rockCuantity = 0;
 	textWood = new Text("hola", WIDTH * 0.10, HEIGHT * 0.10, 14, 33, game);
-	textWood->content = to_string(woodCuantity);
+	
 	textRock = new Text("hola", WIDTH * 0.10, HEIGHT * 0.20, 14, 33, game);
-	textRock->content = to_string(rockCuantity);
+	
 	textCoin = new Text("hola", WIDTH * 0.10, HEIGHT * 0.30, 14, 33, game);
 	
 
@@ -50,6 +48,8 @@ void GameLayer::init() {
 	gridMap->columns = mapWidth / 16;
 	loadMap("res/detalles.txt");
 	textCoin->content = to_string(player->inventory->money);
+	textRock->content = to_string(player->inventory->stone);
+	textWood->content = to_string(player->inventory->wood);
 }
 
 void GameLayer::loadMap(string name) {
@@ -144,6 +144,14 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		Stone* stone = new Stone(fileName, x, y, game);
 		// modificación para empezar a contar desde el suelo.
 		stone->y = stone->y - stone->height / 2;
+
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(stone->x, stone->y, player->orientation));
+		if (tileSelected == NULL)
+			break;
+		stone->x = tileSelected->x;
+		stone->y = tileSelected->y;
+		tileSelected->placeStone(stone);
+		numberOfStone++;
 		//stoneList.push_back(stone);
 		//space->addStaticActor(stone);
 		cout << "added grass" << endl;
@@ -434,24 +442,23 @@ void GameLayer::spawnGrass() {
 }
 
 void GameLayer::spawnStone() {
-	if (stoneSpawnTime == 0 && stoneList.size() < -3) {
-		cout << "Stone spawned" << endl;
-		stoneSpawnTime = stoneSpawnCadence;
+	if (stoneSpawnTime == 0 && numberOfStone < 8) {
 		srand(time(0));
 		int rX = (rand() % (player->x + player->x / 2) + player->x / 2);
 		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(rX, rY, player->orientation));
+		if (tileSelected == NULL)
+			return;
+		stoneSpawnTime = stoneSpawnCadence;
+		
 		string fileName = "res/stone1.png";
 		if (rX % 2 == 0) {
 			fileName = "res/stone2.png";
 		}
-		Stone* stone = new Stone(fileName, rX, rY, game);
-		for (auto const& tile : gridMap->tiles) {
-			if (tile->isOverlap(stone) && tile->canSpawn) {
-				stoneList.push_back(stone);
-				return;
-			}
-		}
-
+		Stone* stone = new Stone(fileName, tileSelected->x, tileSelected->y, game);
+		tileSelected->placeStone(stone);
+		numberOfStone++;
+		cout << "Stone Spawned at x: " << tileSelected->x << " y: " << tileSelected->y << endl;
 
 	}
 }
@@ -476,9 +483,6 @@ void GameLayer::draw() {
 		tile->draw(scrollX, scrollY);
 	}
 	
-	for (auto const& stone : stoneList) {
-		stone->draw(scrollX, scrollY);
-	}
 	player->draw(scrollX, scrollY);
 	// HUD
 
