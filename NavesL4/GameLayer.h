@@ -11,6 +11,10 @@
 #include "Item.h"
 #include "Stone.h"
 #include "GridMap.h"
+#include "Tree.h"
+#include "Recipe.h"
+#include "Sprinkler.h"
+#include "Harvester.h"
 
 #include "Audio.h"
 #include "Space.h" // importar
@@ -60,15 +64,6 @@ public:
 	int controlMoveY = 0;
 	int controlMoveX = 0;
 
-	Actor* backgroundWood;
-	Text* textWood;
-	int woodCuantity;
-	Actor* backgroundRock;
-	Text* textRock;
-	int rockCuantity;
-	Actor* backgroundCoin;
-	Text* textCoin;
-
 	int numberOfGrass = 0;
 	int grassSpawnTime = 0;
 	int grassSpawnCadence = 5;
@@ -79,7 +74,16 @@ public:
 	int stoneSpawnCadence = 5;
 	void spawnStone();
 
+	int numberOfTrees = 0;
+	int treeSpawnTime = 0;
+	int treeSpawnCadence = 5;
+	void spawnTree();
+
+	int actionTime = 0;
+	int actionCadence = 15;
+
 	list<Actor*> actorList;
+	list<Recipe*> recipesList;
 
 	GridMap* gridMap;
 	Actor* tileGuide;

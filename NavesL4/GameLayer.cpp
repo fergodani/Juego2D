@@ -28,20 +28,6 @@ void GameLayer::init() {
 
 	audioBackground = new Audio("res/musica_ambiente.mp3", true);
 	//audioBackground->play();
-	
-	backgroundWood = new Actor("res/wood.png",
-		WIDTH * 0.05, HEIGHT * 0.10, 16, 16, game);
-	backgroundRock = new Actor("res/stoneIcon.png",
-		WIDTH * 0.05, HEIGHT * 0.20, 16, 16, game);
-	backgroundCoin = new Actor("res/coin.png",
-		WIDTH * 0.05, HEIGHT * 0.30, 16, 16, game);
-	textWood = new Text("hola", WIDTH * 0.10, HEIGHT * 0.10, 14, 33, game);
-	
-	textRock = new Text("hola", WIDTH * 0.10, HEIGHT * 0.20, 14, 33, game);
-	
-	textCoin = new Text("hola", WIDTH * 0.10, HEIGHT * 0.30, 14, 33, game);
-	
-
 
 	//loadMap("res/agua.txt");
 	loadMap("res/terreno.txt");
@@ -49,9 +35,6 @@ void GameLayer::init() {
 	gridMap->rows = mapHeight / 16;
 	gridMap->columns = mapWidth / 16;
 	loadMap("res/detalles.txt");
-	textCoin->content = to_string(player->inventory->money);
-	textRock->content = to_string(player->inventory->stone);
-	textWood->content = to_string(player->inventory->wood);
 }
 
 void GameLayer::loadMap(string name) {
@@ -135,6 +118,23 @@ void GameLayer::loadMapObject(char character, float x, float y)
 
 		//space->addStaticActor(tile);
 		cout << "added grass" << endl;
+		break;
+	}
+	case '=': {
+		Tree* tree = new Tree(x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		tree->y = tree->y - tree->height / 2;
+
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(tree->x, tree->y, player->orientation));
+		if (tileSelected == NULL)
+			break;
+		tree->x = tileSelected->x;
+		tree->y = tileSelected->y - tileSelected->height / 2;
+		tileSelected->placeTree(tree);
+		numberOfTrees++;
+
+		//space->addStaticActor(tile);
+		cout << "added tree" << endl;
 		break;
 	}
 	case 'g': {
@@ -320,6 +320,22 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		space->addStaticActor(actor);
 		break;
 	}
+	case '{': {
+		Recipe* recipe = new Recipe(x, y, 1, 1, 1, new Sprinkler(x, y, game), game);
+		// modificación para empezar a contar desde el suelo.
+		recipe->y = recipe->y - recipe->height / 2;
+		recipesList.push_back(recipe);
+		space->addStaticActor(recipe);
+		break;
+	}
+	case '}': {
+		Recipe* recipe = new Recipe(x, y, 1, 1, 1, new Harvester(x, y, game), game);
+		// modificación para empezar a contar desde el suelo.
+		recipe->y = recipe->y - recipe->height / 2;
+		recipesList.push_back(recipe);
+		space->addStaticActor(recipe);
+		break;
+	}
 	}
 }
 
@@ -392,20 +408,13 @@ void GameLayer::processControls() {
 		player->moveY(0);
 	}
 
-	if (controlPlow == true) {
-		player->plow();
-	}
-
-	if (controlWater == true) {
-		player->water();
-	}
-
 	if (controlSwitchTool == true) {
 		player->inventory->nextItem();
 		controlSwitchTool = false;
 	}
 
-	if (controlAction == true) {
+	if (controlAction == true && actionTime == 0) {
+		actionTime = actionCadence;
 		player->inventory->beginAction();
 		controlAction = false;
 	}
@@ -425,8 +434,18 @@ void GameLayer::update() {
 
 	spawnGrass();
 	spawnStone();
-
+	spawnTree();
 	gridMap->update();
+
+	// Recipe colision
+	for (auto const& recipe : recipesList) {
+		if (recipe->isOverlap(player)) {
+			Item* item = recipe->getItem(player->inventory);
+			if (item != NULL) {
+				player->inventory->addItem(item);
+			}
+		}	
+	}
 
 	
 
@@ -436,17 +455,23 @@ void GameLayer::update() {
 	if (stoneSpawnTime > 0) {
 		stoneSpawnTime--;
 	}
+	if (treeSpawnTime > 0) {
+		treeSpawnTime--;
+	}
+	if (actionTime > 0) {
+		actionTime--;
+	}
 }
 
 void GameLayer::spawnGrass() {
 	if (grassSpawnTime == 0 && numberOfGrass< 8) {
-		grassSpawnTime = grassSpawnCadence;
 		srand(time(0));
 		int rX = (rand() % (player->x + player->x/2) + player->x/2);
 		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);
 		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(rX, rY, player->orientation));
-		if (tileSelected == NULL)
+		if (tileSelected == NULL || tileSelected->canSpawn() == false)
 			return;
+		grassSpawnTime = grassSpawnCadence;
 		Grass* grass = new Grass(tileSelected->x, tileSelected->y, game);
 		tileSelected->placeGrass(grass);
 		numberOfGrass++;
@@ -460,7 +485,7 @@ void GameLayer::spawnStone() {
 		int rX = (rand() % (player->x + player->x / 2) + player->x / 2);
 		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);
 		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(rX, rY, player->orientation));
-		if (tileSelected == NULL)
+		if (tileSelected == NULL || tileSelected->canSpawn() == false)
 			return;
 		stoneSpawnTime = stoneSpawnCadence;
 		
@@ -473,6 +498,22 @@ void GameLayer::spawnStone() {
 		numberOfStone++;
 		cout << "Stone Spawned at x: " << tileSelected->x << " y: " << tileSelected->y << endl;
 
+	}
+}
+
+void GameLayer::spawnTree() {
+	if (treeSpawnTime == 0 && numberOfTrees < 8) {
+		srand(time(0));
+		int rX = (rand() % (player->x + player->x / 2) + player->x / 2);
+		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(rX, rY, player->orientation));
+		if (tileSelected == NULL || tileSelected->canSpawn() == false)
+			return;
+		treeSpawnTime = treeSpawnCadence;
+		Tree* tree = new Tree(tileSelected->x, tileSelected->y - tileSelected->height/2, game);
+		tileSelected->placeTree(tree);
+		numberOfTrees++;
+		cout << "Tree Spawned at x: " << tileSelected->x << " y: " << tileSelected->y << endl;
 	}
 }
 
@@ -499,6 +540,10 @@ void GameLayer::draw() {
 	for (auto const& actor : actorList) {
 		actor->draw(scrollX, scrollY);
 	}
+
+	for (auto const& recipe : recipesList) {
+		recipe->draw(scrollX, scrollY);
+	}
 	
 	player->draw(scrollX, scrollY);
 
@@ -506,13 +551,7 @@ void GameLayer::draw() {
 		tileGuide->draw(scrollX, scrollY);
 
 	// HUD
-	backgroundWood->draw();
-	backgroundRock->draw();
-	backgroundCoin->draw();
 	player->inventory->drawItems();
-	textWood->draw();
-	textRock->draw();
-	textCoin->draw();
 
 	SDL_RenderPresent(game->renderer); // Renderiza
 }
@@ -646,9 +685,6 @@ void GameLayer::keysToControls(SDL_Event event) {
 		case SDLK_f:
 			isGuide = !isGuide;
 			break;
-		case SDLK_q:
-			controlWater = true;
-			break;
 		case SDLK_TAB:
 			controlSwitchTool = true;
 			break;
@@ -684,27 +720,19 @@ void GameLayer::keysToControls(SDL_Event event) {
 		case SDLK_SPACE: // accion
 			controlAction = false;
 			break;
-		case SDLK_e:
-			controlPlow = false;
-			break;
-		case SDLK_q:
-			controlWater = false;
-			break;
 		case SDLK_TAB:
 			controlSwitchTool = false;
 			break;
 		}
 
 	}
-	// ZOOM
+	
 	if (event.type == SDL_MOUSEWHEEL) {
 		if (event.button.x == 1) {
-			//if (engine->scale < engine->maxScale) engine->scale += 0.25f;
-			game->zoomIn();
+			player->inventory->previousItem();
 		}
 		else if (event.button.x == -1) {
-			//if (engine->scale > engine->minScale) engine->scale -= 0.25f;
-			game->zoomOut();
+			player->inventory->nextItem();
 		}
 	}
 

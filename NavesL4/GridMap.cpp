@@ -19,7 +19,6 @@ Tile* GridMap::getCollisionTile(float x, float y, int orientation) {
 		yAxis += 1;
 	}
 	int index = yAxis * (columns+1) + xAxis + 1;
-	cout << "x: " << xAxis << " y: " << yAxis << endl;
 	
 	Tile* tileSelected = nullptr;
 	int count = 0;

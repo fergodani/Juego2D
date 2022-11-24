@@ -5,7 +5,7 @@ GroundTile::GroundTile(float x, float y, float width, float height, bool canSpaw
 }
 
 void GroundTile::plow() {
-	if (isPlowed == false) {
+	if (isPlowed == false && isGrassPlaced == false && isStonePlaced == false && isTreePlaced == false) {
 		groundPlowed = new Tile("res/plowed.png", this->x, this->y, 16, 16, false, game);
 		isPlowed = true;
 	}
@@ -22,13 +22,16 @@ void GroundTile::draw(float scrollX, float scrollY) {
 	if (isStonePlaced == true) {
 		placedStone->draw(scrollX, scrollY);
 	}
+	if (isTreePlaced == true) {
+		placedTree->draw(scrollX, scrollY);
+	}
 	if (isCropPlanted == true) {
 		plantedCrop->draw(scrollX, scrollY);
 	}
 }
 
 void GroundTile::placeGrass(Grass* grass) {
-	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false) {
+	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false) {
 		isGrassPlaced = true;
 		placedGrass = grass;
 	}
@@ -49,9 +52,24 @@ void GroundTile::recolectStone() {
 }
 
 void GroundTile::placeStone(Stone* stone) {
-	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false) {
+	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false) {
 		isStonePlaced = true;
 		placedStone = stone;
+	}
+}
+
+void GroundTile::placeTree(Tree* tree) {
+	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false) {
+		isTreePlaced = true;
+		placedTree = tree;
+	}
+}
+
+void GroundTile::recolectTree() {
+	if (isTreePlaced == true) {
+		isTreePlaced = placedTree->nextState();
+		if (isTreePlaced == false)
+			placedTree->~Tree();
 	}
 }
 
@@ -80,5 +98,18 @@ void GroundTile::update() {
 			isWatered = false;
 			groundPlowed->texture = game->getTexture("res/plowed.png");
 		}
+	}
+	if (isTreePlaced == true)
+		placedTree->update();
+}
+
+bool GroundTile::canSpawn() {
+	return !(isStonePlaced || isPlowed || isGrassPlaced || isCropPlanted || isWatered || isTreePlaced);
+}
+
+void GroundTile::harvest() {
+	if (plantedCrop->canHarvest()) {
+		isCropPlanted = false;
+		plantedCrop->~Crop();
 	}
 }

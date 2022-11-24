@@ -53,7 +53,5 @@ public:
 	int waterTime = 0;
 	int waterCadence = 5;
 
-	void action();
-	bool isDoingAction = false;
 };
 

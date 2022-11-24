@@ -21,4 +21,9 @@ void Axe::endAction() {
 	//cout << tileSelected->filename << endl;
 	if (tileSelected->isGrassPlaced == true)
 		tileSelected->recolectGrass();
+	else if (tileSelected->isTreePlaced == true)
+		tileSelected->recolectTree();
+	else if (tileSelected->isCropPlanted == true) {
+		tileSelected->harvest();
+	}
 }

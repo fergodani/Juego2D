@@ -171,6 +171,7 @@
     <ClCompile Include="Grass.cpp" />
     <ClCompile Include="GridMap.cpp" />
     <ClCompile Include="GroundTile.cpp" />
+    <ClCompile Include="Harvester.cpp" />
     <ClCompile Include="Hoe.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -179,11 +180,14 @@
     <ClCompile Include="MenuLayer.cpp" />
     <ClCompile Include="Pad.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Recipe.cpp" />
     <ClCompile Include="Seed.cpp" />
     <ClCompile Include="Space.cpp" />
+    <ClCompile Include="Sprinkler.cpp" />
     <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Tree.cpp" />
     <ClCompile Include="WateringCan.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +202,7 @@
     <ClInclude Include="Grass.h" />
     <ClInclude Include="GridMap.h" />
     <ClInclude Include="GroundTile.h" />
+    <ClInclude Include="Harvester.h" />
     <ClInclude Include="Hoe.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
@@ -205,11 +210,14 @@
     <ClInclude Include="MenuLayer.h" />
     <ClInclude Include="Pad.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Recipe.h" />
     <ClInclude Include="Seed.h" />
     <ClInclude Include="Space.h" />
+    <ClInclude Include="Sprinkler.h" />
     <ClInclude Include="Stone.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="Tree.h" />
     <ClInclude Include="WateringCan.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
