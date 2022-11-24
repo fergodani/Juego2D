@@ -106,3 +106,10 @@ void GroundTile::update() {
 bool GroundTile::canSpawn() {
 	return !(isStonePlaced || isPlowed || isGrassPlaced || isCropPlanted || isWatered || isTreePlaced);
 }
+
+void GroundTile::harvest() {
+	if (plantedCrop->canHarvest()) {
+		isCropPlanted = false;
+		plantedCrop->~Crop();
+	}
+}

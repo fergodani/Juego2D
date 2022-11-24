@@ -55,6 +55,13 @@ void Inventory::nextItem() {
 	selectedItem = items.at(i);
 }
 
+void Inventory::previousItem() {
+	int i = --index % (sizeof(items) / sizeof(int));
+	if (i < 0)
+		i = sizeof(int) - 1;
+	selectedItem = items.at(i);
+}
+
 void Inventory::incrementMoney() {
 	money++;
 }

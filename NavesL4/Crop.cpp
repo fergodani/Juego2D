@@ -1,8 +1,15 @@
 #include "Crop.h"
+#include "GameLayer.h"
 
 Crop::Crop(float x, float y, Game* game)
 	: Actor("res/stage1.png", x, y, 16, 16, game) {
 	filename = "res/stage1.png";
+}
+
+Crop::~Crop() {
+	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
+	gameLayer->player->inventory->incrementMoney();
+	gameLayer->textCoin->content = to_string(gameLayer->player->inventory->money);
 }
 
 void Crop::update() {
@@ -35,4 +42,8 @@ void Crop::nextStage() {
 	default:
 		break;
 	}
+}
+
+bool Crop::canHarvest() {
+	return state == stage4;
 }

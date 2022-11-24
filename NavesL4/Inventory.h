@@ -21,6 +21,7 @@ public:
 	void beginAction();
 	void endAction();
 	void nextItem();
+	void previousItem();
 	void incrementMoney();
 	void decrementMoney(int value);
 	void incrementStone();

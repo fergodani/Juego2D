@@ -409,20 +409,13 @@ void GameLayer::processControls() {
 		player->moveY(0);
 	}
 
-	if (controlPlow == true) {
-		player->plow();
-	}
-
-	if (controlWater == true) {
-		player->water();
-	}
-
 	if (controlSwitchTool == true) {
 		player->inventory->nextItem();
 		controlSwitchTool = false;
 	}
 
-	if (controlAction == true) {
+	if (controlAction == true && actionTime == 0) {
+		actionTime = actionCadence;
 		player->inventory->beginAction();
 		controlAction = false;
 	}
@@ -455,6 +448,9 @@ void GameLayer::update() {
 	}
 	if (treeSpawnTime > 0) {
 		treeSpawnTime--;
+	}
+	if (actionTime > 0) {
+		actionTime--;
 	}
 }
 
@@ -682,9 +678,6 @@ void GameLayer::keysToControls(SDL_Event event) {
 		case SDLK_f:
 			isGuide = !isGuide;
 			break;
-		case SDLK_q:
-			controlWater = true;
-			break;
 		case SDLK_TAB:
 			controlSwitchTool = true;
 			break;
@@ -720,27 +713,19 @@ void GameLayer::keysToControls(SDL_Event event) {
 		case SDLK_SPACE: // accion
 			controlAction = false;
 			break;
-		case SDLK_e:
-			controlPlow = false;
-			break;
-		case SDLK_q:
-			controlWater = false;
-			break;
 		case SDLK_TAB:
 			controlSwitchTool = false;
 			break;
 		}
 
 	}
-	// ZOOM
+	
 	if (event.type == SDL_MOUSEWHEEL) {
 		if (event.button.x == 1) {
-			//if (engine->scale < engine->maxScale) engine->scale += 0.25f;
-			game->zoomIn();
+			player->inventory->previousItem();
 		}
 		else if (event.button.x == -1) {
-			//if (engine->scale > engine->minScale) engine->scale -= 0.25f;
-			game->zoomOut();
+			player->inventory->nextItem();
 		}
 	}
 

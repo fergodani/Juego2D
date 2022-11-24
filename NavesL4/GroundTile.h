@@ -25,6 +25,7 @@ public:
 	void recolectGrass();
 	void recolectStone();
 	void recolectTree();
+	void harvest();
 	bool isPlowed = false;
 	bool isGrassPlaced = false;
 	bool isStonePlaced = false;

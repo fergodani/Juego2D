@@ -85,6 +85,9 @@ public:
 	int treeSpawnCadence = 5;
 	void spawnTree();
 
+	int actionTime = 0;
+	int actionCadence = 15;
+
 	list<Actor*> actorList;
 
 	GridMap* gridMap;
