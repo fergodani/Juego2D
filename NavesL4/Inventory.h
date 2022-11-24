@@ -25,6 +25,8 @@ public:
 	void decrementMoney(int value);
 	void incrementStone();
 	void decrementStone(int value);
+	void incrementWood();
+	void decrementWood(int value);
 	int index = 0;
 	Actor* frame;
 };

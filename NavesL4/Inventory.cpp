@@ -70,3 +70,11 @@ void Inventory::incrementStone() {
 void Inventory::decrementStone(int value) {
 	stone -= value;
 }
+
+void Inventory::incrementWood() {
+	wood++;
+}
+
+void Inventory::decrementWood(int value) {
+	wood -= value;
+}

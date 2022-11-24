@@ -7,7 +7,6 @@ Stone::Stone(string fileName, float x, float y, Game* game)
 
 Stone::~Stone() {
 	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
-	gameLayer->space->removeStaticActor(this);
 	gameLayer->numberOfStone--;
 	gameLayer->player->inventory->incrementStone();
 	gameLayer->textRock->content = to_string(gameLayer->player->inventory->stone);

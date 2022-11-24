@@ -11,6 +11,7 @@
 #include "Item.h"
 #include "Stone.h"
 #include "GridMap.h"
+#include "Tree.h"
 
 #include "Audio.h"
 #include "Space.h" // importar
@@ -78,6 +79,11 @@ public:
 	int stoneSpawnTime = 0;
 	int stoneSpawnCadence = 5;
 	void spawnStone();
+
+	int numberOfTrees = 0;
+	int treeSpawnTime = 0;
+	int treeSpawnCadence = 5;
+	void spawnTree();
 
 	list<Actor*> actorList;
 

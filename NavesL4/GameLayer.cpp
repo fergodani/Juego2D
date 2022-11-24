@@ -137,6 +137,23 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		cout << "added grass" << endl;
 		break;
 	}
+	case '=': {
+		Tree* tree = new Tree(x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		tree->y = tree->y - tree->height / 2;
+
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(tree->x, tree->y, player->orientation));
+		if (tileSelected == NULL)
+			break;
+		tree->x = tileSelected->x;
+		tree->y = tileSelected->y - tileSelected->height / 2;
+		tileSelected->placeTree(tree);
+		numberOfTrees++;
+
+		//space->addStaticActor(tile);
+		cout << "added tree" << endl;
+		break;
+	}
 	case 'g': {
 		int rX = (rand() + 100);
 		string fileName = "res/stone1.png";
@@ -425,7 +442,7 @@ void GameLayer::update() {
 
 	spawnGrass();
 	spawnStone();
-
+	spawnTree();
 	gridMap->update();
 
 	
@@ -436,17 +453,20 @@ void GameLayer::update() {
 	if (stoneSpawnTime > 0) {
 		stoneSpawnTime--;
 	}
+	if (treeSpawnTime > 0) {
+		treeSpawnTime--;
+	}
 }
 
 void GameLayer::spawnGrass() {
 	if (grassSpawnTime == 0 && numberOfGrass< 8) {
-		grassSpawnTime = grassSpawnCadence;
 		srand(time(0));
 		int rX = (rand() % (player->x + player->x/2) + player->x/2);
 		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);
 		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(rX, rY, player->orientation));
-		if (tileSelected == NULL)
+		if (tileSelected == NULL || tileSelected->canSpawn() == false)
 			return;
+		grassSpawnTime = grassSpawnCadence;
 		Grass* grass = new Grass(tileSelected->x, tileSelected->y, game);
 		tileSelected->placeGrass(grass);
 		numberOfGrass++;
@@ -460,7 +480,7 @@ void GameLayer::spawnStone() {
 		int rX = (rand() % (player->x + player->x / 2) + player->x / 2);
 		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);
 		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(rX, rY, player->orientation));
-		if (tileSelected == NULL)
+		if (tileSelected == NULL || tileSelected->canSpawn() == false)
 			return;
 		stoneSpawnTime = stoneSpawnCadence;
 		
@@ -473,6 +493,22 @@ void GameLayer::spawnStone() {
 		numberOfStone++;
 		cout << "Stone Spawned at x: " << tileSelected->x << " y: " << tileSelected->y << endl;
 
+	}
+}
+
+void GameLayer::spawnTree() {
+	if (treeSpawnTime == 0 && numberOfTrees < 8) {
+		srand(time(0));
+		int rX = (rand() % (player->x + player->x / 2) + player->x / 2);
+		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(rX, rY, player->orientation));
+		if (tileSelected == NULL || tileSelected->canSpawn() == false)
+			return;
+		treeSpawnTime = treeSpawnCadence;
+		Tree* tree = new Tree(tileSelected->x, tileSelected->y - tileSelected->height/2, game);
+		tileSelected->placeTree(tree);
+		numberOfTrees++;
+		cout << "Tree Spawned at x: " << tileSelected->x << " y: " << tileSelected->y << endl;
 	}
 }
 
