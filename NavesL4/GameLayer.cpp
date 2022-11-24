@@ -28,20 +28,6 @@ void GameLayer::init() {
 
 	audioBackground = new Audio("res/musica_ambiente.mp3", true);
 	//audioBackground->play();
-	
-	backgroundWood = new Actor("res/wood.png",
-		WIDTH * 0.05, HEIGHT * 0.10, 16, 16, game);
-	backgroundRock = new Actor("res/stoneIcon.png",
-		WIDTH * 0.05, HEIGHT * 0.20, 16, 16, game);
-	backgroundCoin = new Actor("res/coin.png",
-		WIDTH * 0.05, HEIGHT * 0.30, 16, 16, game);
-	textWood = new Text("hola", WIDTH * 0.10, HEIGHT * 0.10, 14, 33, game);
-	
-	textRock = new Text("hola", WIDTH * 0.10, HEIGHT * 0.20, 14, 33, game);
-	
-	textCoin = new Text("hola", WIDTH * 0.10, HEIGHT * 0.30, 14, 33, game);
-	
-
 
 	//loadMap("res/agua.txt");
 	loadMap("res/terreno.txt");
@@ -49,9 +35,6 @@ void GameLayer::init() {
 	gridMap->rows = mapHeight / 16;
 	gridMap->columns = mapWidth / 16;
 	loadMap("res/detalles.txt");
-	textCoin->content = to_string(player->inventory->money);
-	textRock->content = to_string(player->inventory->stone);
-	textWood->content = to_string(player->inventory->wood);
 }
 
 void GameLayer::loadMap(string name) {
@@ -337,6 +320,22 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		space->addStaticActor(actor);
 		break;
 	}
+	case '{': {
+		Recipe* recipe = new Recipe(x, y, 1, 1, 1, new Sprinkler(x, y, game), game);
+		// modificación para empezar a contar desde el suelo.
+		recipe->y = recipe->y - recipe->height / 2;
+		recipesList.push_back(recipe);
+		space->addStaticActor(recipe);
+		break;
+	}
+	case '}': {
+		Recipe* recipe = new Recipe(x, y, 1, 1, 1, new Harvester(x, y, game), game);
+		// modificación para empezar a contar desde el suelo.
+		recipe->y = recipe->y - recipe->height / 2;
+		recipesList.push_back(recipe);
+		space->addStaticActor(recipe);
+		break;
+	}
 	}
 }
 
@@ -438,6 +437,16 @@ void GameLayer::update() {
 	spawnTree();
 	gridMap->update();
 
+	// Recipe colision
+	for (auto const& recipe : recipesList) {
+		if (recipe->isOverlap(player)) {
+			Item* item = recipe->getItem(player->inventory);
+			if (item != NULL) {
+				player->inventory->addItem(item);
+			}
+		}	
+	}
+
 	
 
 	if (grassSpawnTime > 0) {
@@ -531,6 +540,10 @@ void GameLayer::draw() {
 	for (auto const& actor : actorList) {
 		actor->draw(scrollX, scrollY);
 	}
+
+	for (auto const& recipe : recipesList) {
+		recipe->draw(scrollX, scrollY);
+	}
 	
 	player->draw(scrollX, scrollY);
 
@@ -538,13 +551,7 @@ void GameLayer::draw() {
 		tileGuide->draw(scrollX, scrollY);
 
 	// HUD
-	backgroundWood->draw();
-	backgroundRock->draw();
-	backgroundCoin->draw();
 	player->inventory->drawItems();
-	textWood->draw();
-	textRock->draw();
-	textCoin->draw();
 
 	SDL_RenderPresent(game->renderer); // Renderiza
 }

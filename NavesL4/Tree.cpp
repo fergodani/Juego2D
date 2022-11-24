@@ -12,7 +12,6 @@ Tree::~Tree() {
 	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 	gameLayer->numberOfTrees--;
 	gameLayer->player->inventory->incrementWood();
-	gameLayer->textWood->content = to_string(gameLayer->player->inventory->wood);
 }
 
 void Tree::draw(float scrollX, float scrollY) {
@@ -34,7 +33,6 @@ bool Tree::nextState() {
 		state = chopped;
 		GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 		gameLayer->player->inventory->incrementWood();
-		gameLayer->textWood->content = to_string(gameLayer->player->inventory->wood);
 		texture = game->getTexture("res/chopped.png");
 		this->height = 16;
 		this->width = 16;

@@ -9,7 +9,7 @@ Text::Text(string content, float x, float y, float width, float height, Game* ga
 	this->height = height;
 }
 
-void Text::draw() {
+void Text::draw(float scrollX, float scrollY) {
 	SDL_Color color;
 	color.r = 255;
 	color.g = 255;
@@ -21,8 +21,8 @@ void Text::draw() {
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(game->renderer, surface);
 
 	SDL_Rect rect; // Base de coordenadas esquina superior izquierda
-	rect.x = x - surface->w / 2;
-	rect.y = y - surface->h / 2;
+	rect.x = x - surface->w / 2 - scrollX;
+	rect.y = y - surface->h / 2 - scrollY;
 	//rect.w = surface->w;
 	//rect.h = surface->h;
 	rect.w = width;

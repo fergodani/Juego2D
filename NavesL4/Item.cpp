@@ -5,6 +5,7 @@ Item::Item(string fileName, float x, float y, float width, float height, Game* g
 	: Actor(fileName, x, y, width, height, game) {
 	this->cuantity = cuantity;
 	this->price = price;
+	this->filename = fileName;
 }
 
 void Item::beginAction() {

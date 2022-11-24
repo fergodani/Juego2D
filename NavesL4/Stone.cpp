@@ -9,5 +9,4 @@ Stone::~Stone() {
 	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 	gameLayer->numberOfStone--;
 	gameLayer->player->inventory->incrementStone();
-	gameLayer->textRock->content = to_string(gameLayer->player->inventory->stone);
 }

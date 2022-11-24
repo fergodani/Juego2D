@@ -11,9 +11,9 @@ class Inventory
 {
 public:
 	Inventory(Game* game);
-	int wood = 0;
-	int stone = 0;
-	int money = 0;
+	int wood = 2;
+	int stone = 2;
+	int money = 2;
 	vector<Item*> items;
 	Item* selectedItem;
 	void addItem(Item* item);
@@ -29,6 +29,14 @@ public:
 	void incrementWood();
 	void decrementWood(int value);
 	int index = 0;
+	int numOfItems = 0;
 	Actor* frame;
+
+	Actor* backgroundWood;
+	Text* textWood;
+	Actor* backgroundRock;
+	Text* textRock;
+	Actor* backgroundCoin;
+	Text* textCoin;
 };
 

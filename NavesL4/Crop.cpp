@@ -9,7 +9,6 @@ Crop::Crop(float x, float y, Game* game)
 Crop::~Crop() {
 	GameLayer* gameLayer = (GameLayer*)game->gameLayer;
 	gameLayer->player->inventory->incrementMoney();
-	gameLayer->textCoin->content = to_string(gameLayer->player->inventory->money);
 }
 
 void Crop::update() {
