@@ -321,7 +321,9 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '{': {
+		Sprinkler* sprinkler = new Sprinkler(x, y, game);
 		Recipe* recipe = new Recipe(x, y, 1, 1, 1, new Sprinkler(x, y, game), game);
+		
 		// modificación para empezar a contar desde el suelo.
 		recipe->y = recipe->y - recipe->height / 2;
 		recipesList.push_back(recipe);

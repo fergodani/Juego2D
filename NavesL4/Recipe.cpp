@@ -43,7 +43,8 @@ Item* Recipe::getItem(Inventory* inventory) {
 			inventory->decrementMoney(moneyCuantity);
 			inventory->decrementWood(woodCuantity);
 			inventory->decrementStone(stoneCuantity);
-			return new Sprinkler(newItem1->x, newItem1->y, game);
+			Sprinkler* sprinkler = new Sprinkler(newItem1->x, newItem1->y, game);
+			return sprinkler;
 		}
 		Harvester* newItem2 = dynamic_cast<Harvester*>(item);
 		if (newItem2 != NULL && disabledTime == 0) {
@@ -51,7 +52,8 @@ Item* Recipe::getItem(Inventory* inventory) {
 			inventory->decrementMoney(moneyCuantity);
 			inventory->decrementWood(woodCuantity);
 			inventory->decrementStone(stoneCuantity);
-			return new Harvester(newItem2->x, newItem2->y, game);
+			//Harvester* harvester = new Harvester(newItem2->x, newItem2->y + 5, game);
+			return new Harvester(newItem2->x, newItem2->y + 5, game);
 		}
 		return NULL;
 	}

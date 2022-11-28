@@ -4,6 +4,9 @@
 #include "Crop.h"
 #include "Stone.h"
 #include "Tree.h"
+#include "Item.h"
+#include "Sprinkler.h"
+#include "Harvester.h"
 
 class GroundTile : public Tile
 {
@@ -13,15 +16,16 @@ public:
 	void water();
 	void plow();
 	void plant();
-	enum GroundState {normal, plowed, watered};
 	Tile* groundPlowed;
 	Crop* plantedCrop;
 	Grass* placedGrass;
 	Stone* placedStone;
 	Tree* placedTree;
+	Item* placedItem;
 	void placeStone(Stone* stone);
 	void placeGrass(Grass* grass);
 	void placeTree(Tree* tree);
+	void placeItem(Item* item);
 	void recolectGrass();
 	void recolectStone();
 	void recolectTree();
@@ -31,9 +35,12 @@ public:
 	bool isStonePlaced = false;
 	bool isCropPlanted = false;
 	bool isTreePlaced = false;
+	bool isItemPlaced = false;
 	bool isWatered = false;
 	int wateredTime = 0;
 	int wateredCadence = 500;
+	int itemActionTime = 0;
+	int itemActionCadence = 20;
 	void update();
 	bool canSpawn();
 };

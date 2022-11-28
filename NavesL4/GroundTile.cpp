@@ -5,7 +5,7 @@ GroundTile::GroundTile(float x, float y, float width, float height, bool canSpaw
 }
 
 void GroundTile::plow() {
-	if (isPlowed == false && isGrassPlaced == false && isStonePlaced == false && isTreePlaced == false) {
+	if (isPlowed == false && isGrassPlaced == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false) {
 		groundPlowed = new Tile("res/plowed.png", this->x, this->y, 16, 16, false, game);
 		isPlowed = true;
 	}
@@ -28,12 +28,23 @@ void GroundTile::draw(float scrollX, float scrollY) {
 	if (isCropPlanted == true) {
 		plantedCrop->draw(scrollX, scrollY);
 	}
+	if (isItemPlaced == true) {
+		placedItem->draw(scrollX, scrollY);
+	}
+	
 }
 
 void GroundTile::placeGrass(Grass* grass) {
-	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false) {
+	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false) {
 		isGrassPlaced = true;
 		placedGrass = grass;
+	}
+}
+
+void GroundTile::placeItem(Item* item) {
+	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false) {
+		isItemPlaced = true;
+		placedItem = item;
 	}
 }
 
@@ -52,14 +63,14 @@ void GroundTile::recolectStone() {
 }
 
 void GroundTile::placeStone(Stone* stone) {
-	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false) {
+	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false && isItemPlaced == false) {
 		isStonePlaced = true;
 		placedStone = stone;
 	}
 }
 
 void GroundTile::placeTree(Tree* tree) {
-	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false) {
+	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false && isItemPlaced == false) {
 		isTreePlaced = true;
 		placedTree = tree;
 	}
@@ -101,15 +112,28 @@ void GroundTile::update() {
 	}
 	if (isTreePlaced == true)
 		placedTree->update();
+	if (isItemPlaced == true && itemActionTime == 0) {
+		itemActionTime = itemActionCadence;
+		Sprinkler* sprinkler = dynamic_cast<Sprinkler*>(placedItem);
+		if (sprinkler != NULL)
+			sprinkler->water();
+		Harvester* harvester = dynamic_cast<Harvester*>(placedItem);
+		if (harvester != NULL)
+			harvester->harvest();
+	}
+	if (itemActionTime > 0)
+		itemActionTime--;
 }
 
 bool GroundTile::canSpawn() {
-	return !(isStonePlaced || isPlowed || isGrassPlaced || isCropPlanted || isWatered || isTreePlaced);
+	return !(isStonePlaced || isPlowed || isGrassPlaced || isCropPlanted || isWatered || isTreePlaced || isItemPlaced);
 }
 
 void GroundTile::harvest() {
-	if (plantedCrop->canHarvest()) {
-		isCropPlanted = false;
-		plantedCrop->~Crop();
+	if (isCropPlanted == true) {
+		if (plantedCrop->canHarvest()) {
+			isCropPlanted = false;
+			plantedCrop->~Crop();
+		}
 	}
 }

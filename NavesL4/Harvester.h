@@ -5,5 +5,7 @@ class Harvester : public Item
 {
 public:
 	Harvester(float x, float y, Game* game);
+	void beginAction() override;
+	void harvest();
 };
 

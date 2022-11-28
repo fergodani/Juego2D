@@ -43,6 +43,8 @@ void Inventory::addItem(Item* item) {
 void Inventory::drawItems() {
 	float gap = 0.15;
 	for (auto item : items) {
+		//if (item->cuantity <= 0)
+			//continue;
 		item->x = WIDTH * gap;
 		item->y = HEIGHT * 0.90;
 		item->draw();
