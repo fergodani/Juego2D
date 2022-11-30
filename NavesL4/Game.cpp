@@ -18,7 +18,7 @@ Game::Game() {
 	
 	menuLayer = new MenuLayer(this);
 	gameLayer = new GameLayer(this);
-	layer = gameLayer;
+	layer = menuLayer;
 
 	// fuentes
 	TTF_Init();

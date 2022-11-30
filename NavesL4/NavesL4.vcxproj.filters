@@ -155,9 +155,6 @@
     <ClInclude Include="Pad.h">
       <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
-    <ClInclude Include="MenuLayer.h">
-      <Filter>Archivos de encabezado\actores</Filter>
-    </ClInclude>
     <ClInclude Include="Background.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -205,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="Harvester.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuLayer.h">
+      <Filter>Archivos de encabezado\layers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
