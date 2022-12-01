@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+#include "Audio.h"
 #include "Animation.h" // incluir animacion 
 
 class Tree : public Actor
@@ -13,5 +14,6 @@ public:
 	void draw(float scrollX = 0, float scrollY = 0) override;
 	bool nextState();
 	void update();
+	Audio* audioChop;
 };
 

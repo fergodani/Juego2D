@@ -7,6 +7,7 @@
 #include "Item.h"
 #include "Sprinkler.h"
 #include "Harvester.h"
+#include "Audio.h"
 
 class GroundTile : public Tile
 {
@@ -43,5 +44,11 @@ public:
 	int itemActionCadence = 20;
 	void update();
 	bool canSpawn();
+
+	
+	Audio* audioPlow;
+	Audio* audioHarvest;
+	
+	
 };
 

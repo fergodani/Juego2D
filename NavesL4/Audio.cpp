@@ -33,7 +33,7 @@ void Audio::play() {
 	}
 	else {
 		// hay más de 4 en cola
-		if (SDL_GetQueuedAudioSize(deviceId) > wavLength * 4) {
+		if (SDL_GetQueuedAudioSize(deviceId) > wavLength ) {
 			SDL_ClearQueuedAudio(deviceId); // limpiar
 		}
 		SDL_QueueAudio(deviceId, wavBuffer, wavLength);

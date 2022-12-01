@@ -13,5 +13,6 @@ public:
 	virtual void increment();
 	virtual void decrement();
 	string filename;
+	bool isWithoutQuantity = false;
 };
 

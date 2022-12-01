@@ -1,9 +1,16 @@
 #include "Inventory.h"
 
 Inventory::Inventory(Game* game) {
-	addItem(new Axe(game));
-	addItem(new Hoe(game));
-	addItem(new WateringCan(game));
+	this->game = game;
+	Axe* axe = new Axe(game);
+	axe->isWithoutQuantity = true;
+	Hoe* hoe = new Hoe(game);
+	hoe->isWithoutQuantity = true;
+	WateringCan* waterCan = new WateringCan(game);
+	waterCan->isWithoutQuantity = true;
+	addItem(axe);
+	addItem(hoe);
+	addItem(waterCan);
 	addItem(new Seed(game));
 	selectedItem = items.at(index);
 	frame = new Actor("res/frame.png", selectedItem->x, selectedItem->y, 16, 16, game);
@@ -21,20 +28,30 @@ Inventory::Inventory(Game* game) {
 	textCoin->content = to_string(money);
 	textRock->content = to_string(stone);
 	textWood->content = to_string(wood);
+
+	toolSwap = Audio::createAudio("res/toolSwap.wav", false);
+
+	//uiVertical = new Actor("res/uiVertical.png", WIDTH * 0.08, HEIGHT * 0.20, 60, 96, game);
 }
 
 
 void Inventory::addItem(Item* item) {
 	bool found = false;
+	int count = 0;
 	for (auto const& i : items) {
 		if (i->id._Equal(item->id)) {
 			found = true;
 			i->increment();
+			quantities.at(count)->content = to_string(i->cuantity);
 			item->~Item();
 		}
+		if(i->isWithoutQuantity == false)
+			count++;
 	}
 	if (!found) {
 		items.push_back(item);
+		if(item->isWithoutQuantity == false)
+			quantities.push_back(new Text("hola", WIDTH * 0.10, HEIGHT * 0.10, 4, 9, game));
 		numOfItems++;
 	}
 	
@@ -42,12 +59,21 @@ void Inventory::addItem(Item* item) {
 
 void Inventory::drawItems() {
 	float gap = 0.15;
+	int count = 0;
 	for (auto item : items) {
 		//if (item->cuantity <= 0)
 			//continue;
 		item->x = WIDTH * gap;
 		item->y = HEIGHT * 0.90;
 		item->draw();
+		if (item->isWithoutQuantity == false) {
+			Text* text = quantities.at(count);
+			text->content = to_string(item->cuantity);
+			text->x = item->x + item->width / 2;
+			text->y = item->y + item->height / 2;
+			text->draw();
+			count++;
+		}
 		if (item->id == selectedItem->id) {
 			frame->x = item->x;
 			frame->y = item->y;
@@ -55,6 +81,7 @@ void Inventory::drawItems() {
 		}
 		gap += 0.1;
 	}
+	//uiVertical->draw();
 	backgroundCoin->draw();
 	backgroundRock->draw();
 	backgroundWood->draw();
@@ -72,11 +99,13 @@ void Inventory::endAction() {
 }
 
 void Inventory::nextItem() {
+	toolSwap->play();
 	int i = ++index % numOfItems;
 	selectedItem = items.at(i);
 }
 
 void Inventory::previousItem() {
+	toolSwap->play();
 	int i = --index % numOfItems;
 	if (i < 0) {
 		i = numOfItems - 1;

@@ -4,6 +4,8 @@
 #include "Hoe.h"
 #include "WateringCan.h"
 #include "Seed.h"
+#include "Audio.h"
+#include "Text.h"
 #include <list>
 #include <vector>
 
@@ -11,10 +13,12 @@ class Inventory
 {
 public:
 	Inventory(Game* game);
+	Game* game;
 	int wood = 2;
 	int stone = 2;
 	int money = 2;
 	vector<Item*> items;
+	vector<Text*> quantities;
 	Item* selectedItem;
 	void addItem(Item* item);
 	void drawItems();
@@ -38,5 +42,9 @@ public:
 	Text* textRock;
 	Actor* backgroundCoin;
 	Text* textCoin;
+
+	Audio* toolSwap;
+
+	Actor* uiVertical;
 };
 
