@@ -80,7 +80,7 @@ public:
 	void spawnTree();
 
 	int actionTime = 0;
-	int actionCadence = 15;
+	int actionCadence = 20;
 
 	list<Actor*> actorList;
 	list<Recipe*> recipesList;

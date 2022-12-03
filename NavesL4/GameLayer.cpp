@@ -1,4 +1,4 @@
-#include "GameLayer.h"
+Ôªø#include "GameLayer.h"
 
 GameLayer::GameLayer(Game* game)
 	: Layer(game) {
@@ -45,13 +45,13 @@ void GameLayer::loadMap(string name) {
 		return;
 	}
 	else {
-		// Por lÌnea
+		// Por l√≠nea
 		int lines = 0;
 		for (int i = 0; getline(streamFile, line); i++) {
 			lines++;
 			istringstream streamLine(line);
 			mapWidth = line.length() * 16; // Ancho del mapa en pixels
-			// Por car·cter (en cada lÌnea)
+			// Por car√°cter (en cada l√≠nea)
 			for (int j = 0; !streamLine.eof(); j++) {
 				streamLine >> character; // Leer character 
 				cout << character;
@@ -73,14 +73,14 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	case 'P': {
 		loadMapObject('1', x, y);
 		player = new Player(x, y, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		player->y = player->y - player->height / 2;
 		space->addDynamicActor(player);
 		break;
 	}
 	case 'a': {
 		Tile* tile = new Tile("res/agua.png", x, y, 16, 16, false, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
 		//space->addStaticActor(tile);
@@ -88,23 +88,32 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case 'q': {
 		Tile* tile = new Tile("res/detalle1.png", x, y, 16, 16, false, game);
-		// modificaciÛn para empezar a contar desde el suelo.
-		tile->y = tile->y - tile->height / 2;
-		gridMap->detailTiles.push_back(tile);
+		// modificaci√≥n para empezar a contar desde el suelo.
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(tile->x, tile->y, player->orientation));
+		if (tileSelected == NULL)
+			break;
+		tile->x = tileSelected->x;
+		tile->y = tileSelected->y;
+		tileSelected->placeDetail(tile, true);
+		//gridMap->detailTiles.push_back(tile);
 		//space->addStaticActor(tile);
 		break;
 	}
 	case 'w': {
 		Tile* tile = new Tile("res/detalle2.png", x, y, 16, 16, false, game);
-		// modificaciÛn para empezar a contar desde el suelo.
-		tile->y = tile->y - tile->height / 2;
-		gridMap->detailTiles.push_back(tile);
+		// modificaci√≥n para empezar a contar desde el suelo.
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(tile->x, tile->y, player->orientation));
+		if (tileSelected == NULL)
+			break;
+		tile->x = tileSelected->x;
+		tile->y = tileSelected->y;
+		tileSelected->placeDetail(tile, true);
 		//space->addStaticActor(tile);
 		break;
 	}
 	case 's': {
 		Grass* grass = new Grass(x, y, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		grass->y = grass->y - grass->height / 2;
 
 		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(grass->x, grass->y, player->orientation));
@@ -121,7 +130,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case '=': {
 		Tree* tree = new Tree(x, y, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tree->y = tree->y - tree->height / 2;
 
 		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(tree->x, tree->y, player->orientation));
@@ -143,7 +152,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 			fileName = "res/stone2.png";
 		}
 		Stone* stone = new Stone(fileName, x, y, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		stone->y = stone->y - stone->height / 2;
 
 		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(stone->x, stone->y, player->orientation));
@@ -160,7 +169,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case 'b': {
 		Tile* tile = new Tile("res/b.png", x, y, 16, 16, false, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaciÔøΩn para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->detailTiles.push_back(tile);
 		space->addStaticActor(tile);
@@ -168,7 +177,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case 'c': {
 		Tile* tile = new Tile("res/c.png", x, y, 16, 16, false, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaciÔøΩn para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->detailTiles.push_back(tile);
 		space->addStaticActor(tile);
@@ -176,7 +185,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case 'n': {
 		Tile* tile = new Tile("res/n.png", x, y, 16, 16, false, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaciÔøΩn para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->detailTiles.push_back(tile);
 		space->addStaticActor(tile);
@@ -184,7 +193,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case 'v': {
 		Tile* tile = new Tile("res/v.png", x, y, 16, 16, false, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaciÔøΩn para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->detailTiles.push_back(tile);
 		space->addStaticActor(tile);
@@ -192,15 +201,15 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case 'x': {
 		Tile* tile = new Tile("res/x.png", x, y, 16, 16, false, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaciÔøΩn para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->detailTiles.push_back(tile);
-		//space->addStaticActor(tile);
+		space->addStaticActor(tile);
 		break;
 	}
 	case 'z': {
 		Tile* tile = new Tile("res/z.png", x, y, 16, 16, false, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaciÔøΩn para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->detailTiles.push_back(tile);
 		space->addStaticActor(tile);
@@ -211,109 +220,109 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		
 		gridMap->tiles.push_back(tile);
 		break;
 	}
 	case '2': {
-		Tile* tile = new Tile("res/hierba2.png", x, y, 16, 16, false,  game);
+		GroundTile* tile = new GroundTile("res/hierba2.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
 		break;
 	}
 	case '3': {
-		Tile* tile = new Tile("res/hierba3.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba3.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
 		break;
 	}
 	case '4': {
-		Tile* tile = new Tile("res/hierba4.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba4.png",  x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
 		break;
 	}
 	case '5': {
-		Tile* tile = new Tile("res/hierba5.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba5.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
 		break;
 	}
 	case '6': {
-		Tile* tile = new Tile("res/hierba6.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba6.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
 		break;
 	}
 	case '7': {
-		Tile* tile = new Tile("res/hierba7.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba7.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
 		break;
 	}
 	case '8': {
-		Tile* tile = new Tile("res/hierba8.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba8.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
 		break;
 	}
 	case '9': {
-		Tile* tile = new Tile("res/hierba9.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba9.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
 		break;
 	}
 	case 'r': {
 		Tile* tile = new Tile("res/rampa1.png", x, y, 16, 16, false, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
 		break;
 	}
 	case 't': {
 		Tile* tile = new Tile("res/rampa2.png", x, y, 16, 16, false, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		gridMap->tiles.push_back(tile);
 		break;
 	}
 	case '&': {
 		Actor* actor = new Actor("res/work_station.png", x, y, 32, 32, game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		actor->y = actor->y - actor->height / 2;
 		actorList.push_back(actor);
 		space->addStaticActor(actor);
@@ -323,7 +332,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		Sprinkler* sprinkler = new Sprinkler(x, y, game);
 		Recipe* recipe = new Recipe(x, y, 1, 1, 1, new Sprinkler(x, y, game), game);
 		
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		recipe->y = recipe->y - recipe->height / 2;
 		recipesList.push_back(recipe);
 		space->addStaticActor(recipe);
@@ -331,7 +340,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case '}': {
 		Recipe* recipe = new Recipe(x, y, 1, 1, 1, new Harvester(x, y, game), game);
-		// modificaciÛn para empezar a contar desde el suelo.
+		// modificaci√≥n para empezar a contar desde el suelo.
 		recipe->y = recipe->y - recipe->height / 2;
 		recipesList.push_back(recipe);
 		space->addStaticActor(recipe);
@@ -355,7 +364,7 @@ void GameLayer::processControls() {
 			}
 		}
 
-		// Cambio autom·tico de input
+		// Cambio autom√°tico de input
 		// PONER el GamePad
 		if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERAXISMOTION) {
 			game->input = game->inputGamePad;
@@ -474,7 +483,7 @@ void GameLayer::spawnGrass() {
 		int rX = (rand() % (player->x + player->x/2) + player->x/2);
 		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);
 		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(rX, rY, player->orientation));
-		if (tileSelected == NULL || tileSelected->canSpawn() == false)
+		if (tileSelected == NULL)
 			return;
 		grassSpawnTime = grassSpawnCadence;
 		Grass* grass = new Grass(tileSelected->x, tileSelected->y, game);
@@ -538,9 +547,11 @@ void GameLayer::draw() {
 		tile->draw(scrollX, scrollY);
 	}
 
+	
 	for (auto const& tile : gridMap->detailTiles) {
 		tile->draw(scrollX, scrollY);
 	}
+	
 
 	for (auto const& actor : actorList) {
 		actor->draw(scrollX, scrollY);
@@ -557,6 +568,9 @@ void GameLayer::draw() {
 
 	// HUD
 	player->inventory->drawItems();
+	if (pause) {
+		message->draw();
+	}
 
 	SDL_RenderPresent(game->renderer); // Renderiza
 }
@@ -572,7 +586,7 @@ void GameLayer::gamePadToControls(SDL_Event event) {
 	int stickX = SDL_GameControllerGetAxis(gamePad, SDL_CONTROLLER_AXIS_LEFTX);
 	cout << "stickX" << stickX << endl;
 
-	// Retorna aproximadamente entre [-32800, 32800], el centro deberÌa estar en 0
+	// Retorna aproximadamente entre [-32800, 32800], el centro deber√≠a estar en 0
 	// Si el mando tiene "holgura" el centro varia [-4000 , 4000]
 	if (stickX > 4000) {
 		controlMoveX = 1;
@@ -601,7 +615,7 @@ void GameLayer::gamePadToControls(SDL_Event event) {
 
 
 void GameLayer::mouseToControls(SDL_Event event) {
-	// ModificaciÛn de coordenadas por posible escalado
+	// Modificaci√≥n de coordenadas por posible escalado
 	float motionX = event.motion.x / game->scaleLower;
 	float motionY = event.motion.y / game->scaleLower;
 	// Cada vez que hacen click
@@ -631,7 +645,7 @@ void GameLayer::mouseToControls(SDL_Event event) {
 
 		}
 		else {
-			pad->clicked = false; // han sacado el ratÛn del pad
+			pad->clicked = false; // han sacado el rat√≥n del pad
 			controlMoveX = 0;
 		}
 		if (buttonShoot->containsPoint(motionX, motionY) == false) {

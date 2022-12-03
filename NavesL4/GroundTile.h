@@ -13,6 +13,7 @@ class GroundTile : public Tile
 {
 public:
 	GroundTile(float x, float y, float width, float height, bool canSpawn, Game* game);
+	GroundTile(string filename, float x, float y, float width, float height, bool canSpawn, Game* game);
 	void draw(float scrollX = 0, float scrollY = 0) override;
 	void water();
 	void plow();
@@ -23,10 +24,12 @@ public:
 	Stone* placedStone;
 	Tree* placedTree;
 	Item* placedItem;
+	Actor* placedDetail;
 	void placeStone(Stone* stone);
 	void placeGrass(Grass* grass);
 	void placeTree(Tree* tree);
 	void placeItem(Item* item);
+	void placeDetail(Actor* actor, bool isRemovable);
 	void recolectGrass();
 	void recolectStone();
 	void recolectTree();
@@ -38,6 +41,8 @@ public:
 	bool isTreePlaced = false;
 	bool isItemPlaced = false;
 	bool isWatered = false;
+	bool isDetailPlaced = false;
+	bool isRemovableDetail = false;
 	int wateredTime = 0;
 	int wateredCadence = 500;
 	int itemActionTime = 0;

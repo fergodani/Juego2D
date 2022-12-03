@@ -1,12 +1,15 @@
 #include "GroundTile.h"
 GroundTile::GroundTile(float x, float y, float width, float height, bool canSpawn, Game* game)
 	: Tile("res/hierba1.png", x, y, width, height, canSpawn, game) {
-	
-	
 	audioPlow = Audio::createAudio("res/hoeHit.wav", false);
 	audioHarvest = Audio::createAudio("res/hoe.wav", false);
-	
-	
+}
+
+GroundTile::GroundTile(string filename, float x, float y, float width, float height, bool canSpawn, Game* game)
+	: Tile("res/hierba1.png", x, y, width, height, canSpawn, game) {
+	audioPlow = Audio::createAudio("res/hoeHit.wav", false);
+	audioHarvest = Audio::createAudio("res/hoe.wav", false);
+	this->texture = game->getTexture(filename);
 }
 
 void GroundTile::plow() {
@@ -14,6 +17,10 @@ void GroundTile::plow() {
 		audioPlow->play();
 		groundPlowed = new Tile("res/plowed.png", this->x, this->y, 16, 16, false, game);
 		isPlowed = true;
+		if (isDetailPlaced) {
+			isDetailPlaced = false;
+			placedDetail->~Actor();
+		}
 	}
 }
 
@@ -37,18 +44,21 @@ void GroundTile::draw(float scrollX, float scrollY) {
 	if (isItemPlaced == true) {
 		placedItem->draw(scrollX, scrollY);
 	}
+	if (isDetailPlaced == true) {
+		placedDetail->draw(scrollX, scrollY);
+	}
 	
 }
 
 void GroundTile::placeGrass(Grass* grass) {
-	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false) {
+	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced) ){
 		isGrassPlaced = true;
 		placedGrass = grass;
 	}
 }
 
 void GroundTile::placeItem(Item* item) {
-	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false) {
+	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced)) {
 		isItemPlaced = true;
 		placedItem = item;
 	}
@@ -70,14 +80,14 @@ void GroundTile::recolectStone() {
 }
 
 void GroundTile::placeStone(Stone* stone) {
-	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false && isItemPlaced == false) {
+	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced)) {
 		isStonePlaced = true;
 		placedStone = stone;
 	}
 }
 
 void GroundTile::placeTree(Tree* tree) {
-	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false && isItemPlaced == false) {
+	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced)) {
 		isTreePlaced = true;
 		placedTree = tree;
 	}
@@ -143,5 +153,13 @@ void GroundTile::harvest() {
 			isCropPlanted = false;
 			plantedCrop->~Crop();
 		}
+	}
+}
+
+void GroundTile::placeDetail(Actor* actor, bool isRemovable) {
+	if (isStonePlaced == false && isGrassPlaced == false && isTreePlaced == false && !isDetailPlaced) {
+		isDetailPlaced = true;
+		placedDetail = actor;
+		isRemovableDetail = isRemovable;
 	}
 }
