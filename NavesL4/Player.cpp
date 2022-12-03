@@ -166,32 +166,36 @@ void Player::update() {
 			}
 		}
 
-		if (chopTime > 0) {
-			chopTime--;
-		}
-		if (plowTime > 0) {
-			plowTime--;
-		}
+	}
+	if (chopTime > 0) {
+		chopTime--;
+	}
+	if (plowTime > 0) {
+		plowTime--;
+	}
 
-		if (waterTime > 0) {
-			waterTime--;
-		}
+	if (waterTime > 0) {
+		waterTime--;
 	}
 
 }
 
 void Player::moveX(float axis) {
-	if (state == game->stateMoving)
+	if (state == game->stateMoving) {
 		vx = axis * 3.5;
-	else
+	}
+	else {
 		vx = 0;
+	}
 }
 
 void Player::moveY(float axis) {
-	if (state == game->stateMoving)
+	if (state == game->stateMoving) {
 		vy = axis * 3.5;
-	else
+	}
+	else {
 		vy = 0;
+	}
 }
 
 void Player::draw(float scrollX, float scrollY) {

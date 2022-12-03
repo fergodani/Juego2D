@@ -2,10 +2,16 @@
 GroundTile::GroundTile(float x, float y, float width, float height, bool canSpawn, Game* game)
 	: Tile("res/hierba1.png", x, y, width, height, canSpawn, game) {
 	
+	
+	audioPlow = Audio::createAudio("res/hoeHit.wav", false);
+	audioHarvest = Audio::createAudio("res/hoe.wav", false);
+	
+	
 }
 
 void GroundTile::plow() {
 	if (isPlowed == false && isGrassPlaced == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false) {
+		audioPlow->play();
 		groundPlowed = new Tile("res/plowed.png", this->x, this->y, 16, 16, false, game);
 		isPlowed = true;
 	}
@@ -50,6 +56,7 @@ void GroundTile::placeItem(Item* item) {
 
 void GroundTile::recolectGrass() {
 	if (isGrassPlaced == true) {
+		audioHarvest->play();
 		isGrassPlaced = false;
 		placedGrass->~Grass();
 	}
@@ -132,6 +139,7 @@ bool GroundTile::canSpawn() {
 void GroundTile::harvest() {
 	if (isCropPlanted == true) {
 		if (plantedCrop->canHarvest()) {
+			audioHarvest->play();
 			isCropPlanted = false;
 			plantedCrop->~Crop();
 		}

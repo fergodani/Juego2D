@@ -25,9 +25,8 @@ void GameLayer::init() {
 	scrollX = 0;
 	scrollY = 0;
 	gridMap->tiles.clear();
-
-	audioBackground = new Audio("res/musica_ambiente.mp3", true);
-	//audioBackground->play();
+	audioBackground = Audio::createAudio("res/spring_day.wav", true);
+	audioBackground->play();
 
 	//loadMap("res/agua.txt");
 	loadMap("res/terreno.txt");
@@ -438,6 +437,10 @@ void GameLayer::update() {
 	spawnStone();
 	spawnTree();
 	gridMap->update();
+
+	for (auto const& recipe : recipesList) {
+		recipe->update();
+	}
 
 	// Recipe colision
 	for (auto const& recipe : recipesList) {

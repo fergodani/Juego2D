@@ -3,13 +3,26 @@
 #include <string> 
 using namespace std;
 
+#include <map> 
 #include <SDL.h>;
 #include <SDL_mixer.h> // libreria de audio
 
 class Audio
 {
-public:
 	Audio(string filename, bool loop);
+public:
+	static Audio* createAudio(string filename, bool loop) {
+		// Mapa estático
+		static map<string, Audio*> instancedAudios;
+
+		if (instancedAudios.find(filename) == instancedAudios.end()) {
+			cout << "Audio no cacheado lo creo " + filename << endl;;
+			instancedAudios[filename] = new Audio(filename, loop);
+		}
+
+		return instancedAudios[filename];
+	}
+
 	~Audio(); //destructor
 	void play();
 	bool loop;
