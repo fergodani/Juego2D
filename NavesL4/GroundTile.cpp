@@ -176,7 +176,8 @@ void GroundTile::placeDetail(Actor* actor, bool isRemovable) {
 	if (isStonePlaced == false && isGrassPlaced == false && isTreePlaced == false && !isDetailPlaced) {
 		isDetailPlaced = true;
 		placedDetail = actor;
-		placedDetail->y = this->y - this->height / 2;
+		if(!isRemovable)
+			placedDetail->y = this->y - this->height / 2;
 		isRemovableDetail = isRemovable;
 	}
 }

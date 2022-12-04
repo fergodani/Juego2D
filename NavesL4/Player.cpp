@@ -57,6 +57,19 @@ Player::Player(float x, float y, Game* game)
 void Player::update() {
 
 	bool endAnimation = animation->update();
+	// Establecer orientación
+	if (vx > 0) {
+		orientation = game->orientationRight;
+	}
+	if (vx < 0) {
+		orientation = game->orientationLeft;
+	}
+	if (vy < 0) {
+		orientation = game->orientationUp;
+	}
+	if (vy > 0) {
+		orientation = game->orientationDown;
+	}
 
 
 	// Acabo la animación, no sabemos cual
@@ -72,19 +85,7 @@ void Player::update() {
 		}
 	}
 
-	// Establecer orientación
-	if (vx > 0) {
-		orientation = game->orientationRight;
-	}
-	if (vx < 0) {
-		orientation = game->orientationLeft;
-	}
-	if (vy < 0) {
-		orientation = game->orientationUp;
-	}
-	if (vy > 0) {
-		orientation = game->orientationDown;
-	}
+	
 
 
 	// Selección de animación basada en estados

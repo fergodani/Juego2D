@@ -360,6 +360,10 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		
 		// modificación para empezar a contar desde el suelo.
 		recipe->y = recipe->y - recipe->height / 2;
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(recipe->x, recipe->y));
+		if (tileSelected == NULL)
+			break;
+		tileSelected->placeDetail(recipe, false);
 		recipesList.push_back(recipe);
 		space->addStaticActor(recipe);
 		break;
@@ -368,6 +372,10 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		Recipe* recipe = new Recipe(x, y, 4, 2, 4, new Harvester(x, y, game), game);
 		// modificación para empezar a contar desde el suelo.
 		recipe->y = recipe->y - recipe->height / 2;
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(recipe->x, recipe->y));
+		if (tileSelected == NULL)
+			break;
+		tileSelected->placeDetail(recipe, false);
 		recipesList.push_back(recipe);
 		space->addStaticActor(recipe);
 		break;
@@ -460,6 +468,10 @@ void GameLayer::processControls() {
 void GameLayer::update() {
 	if (pause) {
 		return;
+	}
+	if (player->inventory->money == PUNTOS) {
+		pause = true;
+		message = new Actor("res/mensaje_ganar.PNG", WIDTH * 0.5, HEIGHT * 0.5, WIDTH, HEIGHT, game);
 	}
 
 	space->update();
@@ -573,10 +585,11 @@ void GameLayer::draw() {
 		tile->draw(scrollX, scrollY);
 	}
 
-	
+	/*
 	for (auto const& tile : gridMap->detailTiles) {
 		tile->draw(scrollX, scrollY);
 	}
+	*/
 	
 
 	for (auto const& actor : actorList) {
