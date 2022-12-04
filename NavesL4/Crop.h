@@ -11,7 +11,7 @@ public:
 	void update();
 	bool canHarvest();
 	string filename;
-	int growTime = 10;
-	int growCadence = 10;
+	int growTime = 100;
+	int growCadence = 100;
 };
 

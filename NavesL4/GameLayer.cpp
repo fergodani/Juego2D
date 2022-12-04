@@ -171,7 +171,11 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		Tile* tile = new Tile("res/b.png", x, y, 16, 16, false, game);
 		// modificaci�n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
-		gridMap->detailTiles.push_back(tile);
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(tile->x, tile->y));
+		if (tileSelected == NULL)
+			break;
+		tileSelected->placeDetail(tile, false);
+		//gridMap->detailTiles.push_back(tile);
 		space->addStaticActor(tile);
 		break;
 	}
@@ -179,7 +183,12 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		Tile* tile = new Tile("res/c.png", x, y, 16, 16, false, game);
 		// modificaci�n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
-		gridMap->detailTiles.push_back(tile);
+		tile->y = tile->y - tile->height / 2;
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(tile->x, tile->y));
+		if (tileSelected == NULL)
+			break;
+		tileSelected->placeDetail(tile, false);
+		//gridMap->detailTiles.push_back(tile);
 		space->addStaticActor(tile);
 		break;
 	}
@@ -187,7 +196,12 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		Tile* tile = new Tile("res/n.png", x, y, 16, 16, false, game);
 		// modificaci�n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
-		gridMap->detailTiles.push_back(tile);
+		tile->y = tile->y - tile->height / 2;
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(tile->x, tile->y));
+		if (tileSelected == NULL)
+			break;
+		tileSelected->placeDetail(tile, false);
+		//gridMap->detailTiles.push_back(tile);
 		space->addStaticActor(tile);
 		break;
 	}
@@ -195,7 +209,12 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		Tile* tile = new Tile("res/v.png", x, y, 16, 16, false, game);
 		// modificaci�n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
-		gridMap->detailTiles.push_back(tile);
+		tile->y = tile->y - tile->height / 2;
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(tile->x, tile->y));
+		if (tileSelected == NULL)
+			break;
+		tileSelected->placeDetail(tile, false);
+		//gridMap->detailTiles.push_back(tile);
 		space->addStaticActor(tile);
 		break;
 	}
@@ -203,7 +222,11 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		Tile* tile = new Tile("res/x.png", x, y, 16, 16, false, game);
 		// modificaci�n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
-		gridMap->detailTiles.push_back(tile);
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(tile->x, tile->y));
+		if (tileSelected == NULL)
+			break;
+		tileSelected->placeDetail(tile, false);
+		//gridMap->detailTiles.push_back(tile);
 		space->addStaticActor(tile);
 		break;
 	}
@@ -211,7 +234,11 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		Tile* tile = new Tile("res/z.png", x, y, 16, 16, false, game);
 		// modificaci�n para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
-		gridMap->detailTiles.push_back(tile);
+		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gridMap->getCollisionTile(tile->x, tile->y));
+		if (tileSelected == NULL)
+			break;
+		tileSelected->placeDetail(tile, false);
+		//gridMap->detailTiles.push_back(tile);
 		space->addStaticActor(tile);
 		break;
 	}
@@ -227,7 +254,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '2': {
-		Tile* tile = new Tile("res/hierba2.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba2.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -237,7 +264,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '3': {
-		Tile* tile = new Tile("res/hierba3.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba3.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -257,7 +284,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '5': {
-		Tile* tile = new Tile("res/hierba5.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba5.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -267,7 +294,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '6': {
-		Tile* tile = new Tile("res/hierba6.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba6.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -277,7 +304,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '7': {
-		Tile* tile = new Tile("res/hierba7.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba7.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -287,7 +314,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '8': {
-		Tile* tile = new Tile("res/hierba8.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba8.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -297,7 +324,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '9': {
-		Tile* tile = new Tile("res/hierba9.png", x, y, 16, 16, false, game);
+		GroundTile* tile = new GroundTile("res/hierba9.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -325,12 +352,11 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		// modificación para empezar a contar desde el suelo.
 		actor->y = actor->y - actor->height / 2;
 		actorList.push_back(actor);
-		space->addStaticActor(actor);
 		break;
 	}
 	case '{': {
 		Sprinkler* sprinkler = new Sprinkler(x, y, game);
-		Recipe* recipe = new Recipe(x, y, 1, 1, 1, new Sprinkler(x, y, game), game);
+		Recipe* recipe = new Recipe(x, y, 2, 1, 3, new Sprinkler(x, y, game), game);
 		
 		// modificación para empezar a contar desde el suelo.
 		recipe->y = recipe->y - recipe->height / 2;
@@ -339,7 +365,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '}': {
-		Recipe* recipe = new Recipe(x, y, 1, 1, 1, new Harvester(x, y, game), game);
+		Recipe* recipe = new Recipe(x, y, 4, 2, 4, new Harvester(x, y, game), game);
 		// modificación para empezar a contar desde el suelo.
 		recipe->y = recipe->y - recipe->height / 2;
 		recipesList.push_back(recipe);
@@ -478,7 +504,7 @@ void GameLayer::update() {
 }
 
 void GameLayer::spawnGrass() {
-	if (grassSpawnTime == 0 && numberOfGrass< 8) {
+	if (grassSpawnTime == 0 && numberOfGrass < 8) {
 		srand(time(0));
 		int rX = (rand() % (player->x + player->x/2) + player->x/2);
 		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);

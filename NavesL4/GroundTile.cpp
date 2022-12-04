@@ -56,7 +56,6 @@ void GroundTile::draw(float scrollX, float scrollY) {
 	if (isDetailPlaced == true) {
 		placedDetail->draw(scrollX, scrollY);
 	}
-	
 }
 
 void GroundTile::placeGrass(Grass* grass) {
@@ -177,6 +176,7 @@ void GroundTile::placeDetail(Actor* actor, bool isRemovable) {
 	if (isStonePlaced == false && isGrassPlaced == false && isTreePlaced == false && !isDetailPlaced) {
 		isDetailPlaced = true;
 		placedDetail = actor;
+		placedDetail->y = this->y - this->height / 2;
 		isRemovableDetail = isRemovable;
 	}
 }

@@ -30,6 +30,22 @@ Tile* GridMap::getCollisionTile(float x, float y, int orientation) {
 	return tileSelected;
 }
 
+Tile* GridMap::getCollisionTile(float x, float y) {
+	int xAxis = (int)(x / 16) - 1;
+	int yAxis = (int)(y / 16);
+
+	int index = yAxis * (columns + 1) + xAxis + 1;
+
+	Tile* tileSelected = nullptr;
+	int count = 0;
+	for (auto const& tile : tiles) {
+		if (count == index)
+			tileSelected = tile;
+		count++;
+	}
+	return tileSelected;
+}
+
 void GridMap::update() {
 	for (auto const& tile : tiles) {
 		GroundTile* tileSelected = dynamic_cast<GroundTile*>(tile);
