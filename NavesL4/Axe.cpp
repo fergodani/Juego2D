@@ -26,4 +26,8 @@ void Axe::endAction() {
 	else if (tileSelected->isCropPlanted == true) {
 		tileSelected->harvest();
 	}
+	else if (tileSelected->isItemPlaced == true) {
+		gameLayer->player->inventory->addItem(tileSelected->placedItem);
+		tileSelected->removeItem();
+	}
 }

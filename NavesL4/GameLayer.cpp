@@ -6,7 +6,7 @@ GameLayer::GameLayer(Game* game)
 	pause = true;
 	message = new Actor("res/mensaje_como_jugar.png", WIDTH * 0.5, HEIGHT * 0.5,
 		WIDTH, HEIGHT, game);
-
+	mission = new Actor("res/mision.png", WIDTH * 0.75, HEIGHT * 0.07, 294, 14, game);
 	gamePad = SDL_GameControllerOpen(0);
 	gridMap = new GridMap(game);
 	init();
@@ -227,7 +227,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '2': {
-		GroundTile* tile = new GroundTile("res/hierba2.png", x, y, 16, 16, false, game);
+		Tile* tile = new Tile("res/hierba2.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -237,7 +237,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '3': {
-		GroundTile* tile = new GroundTile("res/hierba3.png", x, y, 16, 16, false, game);
+		Tile* tile = new Tile("res/hierba3.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -247,7 +247,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '4': {
-		GroundTile* tile = new GroundTile("res/hierba4.png",  x, y, 16, 16, false, game);
+		Tile* tile = new Tile("res/hierba4.png",  x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -257,7 +257,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '5': {
-		GroundTile* tile = new GroundTile("res/hierba5.png", x, y, 16, 16, false, game);
+		Tile* tile = new Tile("res/hierba5.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -267,7 +267,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '6': {
-		GroundTile* tile = new GroundTile("res/hierba6.png", x, y, 16, 16, false, game);
+		Tile* tile = new Tile("res/hierba6.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -277,7 +277,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '7': {
-		GroundTile* tile = new GroundTile("res/hierba7.png", x, y, 16, 16, false, game);
+		Tile* tile = new Tile("res/hierba7.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -287,7 +287,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '8': {
-		GroundTile* tile = new GroundTile("res/hierba8.png", x, y, 16, 16, false, game);
+		Tile* tile = new Tile("res/hierba8.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -297,7 +297,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		break;
 	}
 	case '9': {
-		GroundTile* tile = new GroundTile("res/hierba9.png", x, y, 16, 16, false, game);
+		Tile* tile = new Tile("res/hierba9.png", x, y, 16, 16, false, game);
 		Tile* waterTile = new Tile("res/agua.png", x, y, 16, 16, false, game);
 		waterTile->y = waterTile->y - waterTile->height / 2;
 		gridMap->waterTiles.push_back(waterTile);
@@ -568,6 +568,7 @@ void GameLayer::draw() {
 
 	// HUD
 	player->inventory->drawItems();
+	mission->draw();
 	if (pause) {
 		message->draw();
 	}

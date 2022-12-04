@@ -3,6 +3,7 @@ GroundTile::GroundTile(float x, float y, float width, float height, bool canSpaw
 	: Tile("res/hierba1.png", x, y, width, height, canSpawn, game) {
 	audioPlow = Audio::createAudio("res/hoeHit.wav", false);
 	audioHarvest = Audio::createAudio("res/hoe.wav", false);
+	audioItem = Audio::createAudio("res/axe.wav", false);
 }
 
 GroundTile::GroundTile(string filename, float x, float y, float width, float height, bool canSpawn, Game* game)
@@ -21,6 +22,14 @@ void GroundTile::plow() {
 			isDetailPlaced = false;
 			placedDetail->~Actor();
 		}
+	}
+}
+
+void GroundTile::removePlow() {
+	if (isPlowed) {
+		audioPlow->play();
+		groundPlowed->~Tile();
+		isPlowed = false;
 	}
 }
 
@@ -61,6 +70,14 @@ void GroundTile::placeItem(Item* item) {
 	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced)) {
 		isItemPlaced = true;
 		placedItem = item;
+	}
+}
+
+void GroundTile::removeItem() {
+	if (isItemPlaced) {
+		audioItem->play();
+		isItemPlaced = false;
+		placedItem->~Item();
 	}
 }
 

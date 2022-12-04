@@ -17,6 +17,7 @@ public:
 	void draw(float scrollX = 0, float scrollY = 0) override;
 	void water();
 	void plow();
+	void removePlow();
 	void plant();
 	Tile* groundPlowed;
 	Crop* plantedCrop;
@@ -29,6 +30,7 @@ public:
 	void placeGrass(Grass* grass);
 	void placeTree(Tree* tree);
 	void placeItem(Item* item);
+	void removeItem();
 	void placeDetail(Actor* actor, bool isRemovable);
 	void recolectGrass();
 	void recolectStone();
@@ -53,7 +55,7 @@ public:
 	
 	Audio* audioPlow;
 	Audio* audioHarvest;
-	
+	Audio* audioItem;
 	
 };
 

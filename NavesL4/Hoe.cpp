@@ -23,6 +23,9 @@ void Hoe::endAction() {
 	if (tileSelected->isStonePlaced == true) {
 		tileSelected->recolectStone();
 	}
+	else if (tileSelected->isPlowed == true) {
+		tileSelected->removePlow();
+	}
 	else
 		tileSelected->plow();
 }

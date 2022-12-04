@@ -88,5 +88,7 @@ public:
 	GridMap* gridMap;
 	Actor* tileGuide;
 	bool isGuide = false;
+
+	Actor* mission;
 };
 
