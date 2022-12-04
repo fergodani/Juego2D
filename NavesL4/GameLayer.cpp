@@ -620,6 +620,8 @@ void GameLayer::gamePadToControls(SDL_Event event) {
 	// Leer los botones
 	bool buttonA = SDL_GameControllerGetButton(gamePad, SDL_CONTROLLER_BUTTON_A);
 	bool buttonB = SDL_GameControllerGetButton(gamePad, SDL_CONTROLLER_BUTTON_B);
+	bool buttonX = SDL_GameControllerGetButton(gamePad, SDL_CONTROLLER_BUTTON_X);
+	bool buttonY = SDL_GameControllerGetButton(gamePad, SDL_CONTROLLER_BUTTON_Y);
 	// SDL_CONTROLLER_BUTTON_A, SDL_CONTROLLER_BUTTON_B
 	// SDL_CONTROLLER_BUTTON_X, SDL_CONTROLLER_BUTTON_Y
 	cout << "botones:" << buttonA << "," << buttonB << endl;
@@ -639,18 +641,17 @@ void GameLayer::gamePadToControls(SDL_Event event) {
 	}
 
 	if (buttonA) {
-		//controlShoot = true;
-	}
-	else {
-		//controlShoot = false;
+		controlAction = true;
+		controlContinue = true;
 	}
 
 	if (buttonB) {
-		controlMoveY = -1; // Saltar
+		controlSwitchTool = true;
 	}
-	else {
-		controlMoveY = 0;
+	if (buttonX) {
+		isGuide = !isGuide;
 	}
+
 }
 
 
