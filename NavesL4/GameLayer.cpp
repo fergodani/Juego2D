@@ -584,13 +584,6 @@ void GameLayer::draw() {
 		tile->draw(scrollX, scrollY);
 	}
 
-	/*
-	for (auto const& tile : gridMap->detailTiles) {
-		tile->draw(scrollX, scrollY);
-	}
-	*/
-	
-
 	for (auto const& actor : actorList) {
 		actor->draw(scrollX, scrollY);
 	}
@@ -697,7 +690,7 @@ void GameLayer::keysToControls(SDL_Event event) {
 		case SDLK_ESCAPE:
 			game->loopActive = false;
 			break;
-		case SDLK_0:
+		case SDLK_1:
 			game->scale();
 			break;
 		case SDLK_d: // derecha
