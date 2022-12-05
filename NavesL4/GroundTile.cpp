@@ -58,17 +58,27 @@ void GroundTile::draw(float scrollX, float scrollY) {
 	}
 }
 
-void GroundTile::placeGrass(Grass* grass) {
+bool GroundTile::placeGrass(Grass* grass) {
 	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced) ){
 		isGrassPlaced = true;
 		placedGrass = grass;
+		if (isDetailPlaced) {
+			isDetailPlaced = false;
+			placedDetail->~Actor();
+		}
+		return true;
 	}
+	return false;
 }
 
 void GroundTile::placeItem(Item* item) {
 	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced)) {
 		isItemPlaced = true;
 		placedItem = item;
+		if (isDetailPlaced) {
+			isDetailPlaced = false;
+			placedDetail->~Actor();
+		}
 	}
 }
 
@@ -95,18 +105,30 @@ void GroundTile::recolectStone() {
 	}
 }
 
-void GroundTile::placeStone(Stone* stone) {
+bool GroundTile::placeStone(Stone* stone) {
 	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced)) {
 		isStonePlaced = true;
 		placedStone = stone;
+		if (isDetailPlaced) {
+			isDetailPlaced = false;
+			placedDetail->~Actor();
+		}
+		return true;
 	}
+	return false;
 }
 
-void GroundTile::placeTree(Tree* tree) {
+bool GroundTile::placeTree(Tree* tree) {
 	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced)) {
 		isTreePlaced = true;
 		placedTree = tree;
+		if (isDetailPlaced) {
+			isDetailPlaced = false;
+			placedDetail->~Actor();
+		}
+		return true;
 	}
+	return false;
 }
 
 void GroundTile::recolectTree() {

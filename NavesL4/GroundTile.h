@@ -26,9 +26,9 @@ public:
 	Tree* placedTree;
 	Item* placedItem;
 	Actor* placedDetail;
-	void placeStone(Stone* stone);
-	void placeGrass(Grass* grass);
-	void placeTree(Tree* tree);
+	bool placeStone(Stone* stone);
+	bool placeGrass(Grass* grass);
+	bool placeTree(Tree* tree);
 	void placeItem(Item* item);
 	void removeItem();
 	void placeDetail(Actor* actor, bool isRemovable);

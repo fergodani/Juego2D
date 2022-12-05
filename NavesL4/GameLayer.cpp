@@ -516,7 +516,7 @@ void GameLayer::update() {
 }
 
 void GameLayer::spawnGrass() {
-	if (grassSpawnTime == 0 && numberOfGrass < 8) {
+	if (grassSpawnTime == 0 && numberOfGrass < 15) {
 		srand(time(0));
 		int rX = (rand() % (player->x + player->x/2) + player->x/2);
 		int rY = (rand() % (player->y + player->y / 2) + player->y / 2);
@@ -525,8 +525,8 @@ void GameLayer::spawnGrass() {
 			return;
 		grassSpawnTime = grassSpawnCadence;
 		Grass* grass = new Grass(tileSelected->x, tileSelected->y, game);
-		tileSelected->placeGrass(grass);
-		numberOfGrass++;
+		if(tileSelected->placeGrass(grass))
+			numberOfGrass++;
 		cout << "Grass Spawned at x: " << tileSelected->x << " y: " << tileSelected->y << endl;
 	}
 }
@@ -546,8 +546,8 @@ void GameLayer::spawnStone() {
 			fileName = "res/stone2.png";
 		}
 		Stone* stone = new Stone(fileName, tileSelected->x, tileSelected->y, game);
-		tileSelected->placeStone(stone);
-		numberOfStone++;
+		if(tileSelected->placeStone(stone))
+			numberOfStone++;
 		cout << "Stone Spawned at x: " << tileSelected->x << " y: " << tileSelected->y << endl;
 
 	}
@@ -563,15 +563,21 @@ void GameLayer::spawnTree() {
 			return;
 		treeSpawnTime = treeSpawnCadence;
 		Tree* tree = new Tree(tileSelected->x, tileSelected->y - tileSelected->height/2, game);
-		tileSelected->placeTree(tree);
-		numberOfTrees++;
+		if(tileSelected->placeTree(tree))
+			numberOfTrees++;
 		cout << "Tree Spawned at x: " << tileSelected->x << " y: " << tileSelected->y << endl;
 	}
 }
 
 void GameLayer::calculateScroll() {
-	scrollX = player->x - WIDTH/2;
-	scrollY = player->y - HEIGHT/2;
+	scrollY = player->y - HEIGHT / 2;
+	if (player->x < WIDTH * 0.6) {
+		return;
+	}
+	if (player->x > mapWidth - WIDTH * 0.8) {
+		return;
+	}
+	scrollX = player->x - WIDTH / 2;
 }
 
 

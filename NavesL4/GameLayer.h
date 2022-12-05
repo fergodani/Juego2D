@@ -23,7 +23,7 @@
 #include <sstream> // Leer líneas / String
 #include <list>
 
-#define PUNTOS 50
+#define PUNTOS 25
 
 class GameLayer : public Layer
 {
