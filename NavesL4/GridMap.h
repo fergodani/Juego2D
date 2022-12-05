@@ -12,6 +12,7 @@ public:
 	//void addTile(Tile* tile);
 	//void addWaterTile(Tile* tile);
 	Tile* getCollisionTile(float x, float y, int orientation);
+	Tile* getCollisionTile(float x, float y);
 	void update();
 	int rows;
 	int columns;

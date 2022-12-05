@@ -18,12 +18,15 @@ void Axe::endAction() {
 	GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));
 	if (tileSelected == NULL)
 		return;
-	//cout << tileSelected->filename << endl;
 	if (tileSelected->isGrassPlaced == true)
 		tileSelected->recolectGrass();
 	else if (tileSelected->isTreePlaced == true)
 		tileSelected->recolectTree();
 	else if (tileSelected->isCropPlanted == true) {
 		tileSelected->harvest();
+	}
+	else if (tileSelected->isItemPlaced == true) {
+		gameLayer->player->inventory->addItem(tileSelected->placedItem);
+		tileSelected->removeItem();
 	}
 }

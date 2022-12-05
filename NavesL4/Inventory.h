@@ -14,9 +14,9 @@ class Inventory
 public:
 	Inventory(Game* game);
 	Game* game;
-	int wood = 2;
-	int stone = 2;
-	int money = 2;
+	int wood = 0;
+	int stone = 0;
+	int money = 0;
 	vector<Item*> items;
 	vector<Text*> quantities;
 	Item* selectedItem;

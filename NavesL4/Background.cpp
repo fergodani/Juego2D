@@ -51,4 +51,3 @@ void Background::draw(float scrollX, float scrollY) {
 	}
 
 }
-

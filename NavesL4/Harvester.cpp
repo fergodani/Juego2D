@@ -12,7 +12,7 @@ void Harvester::beginAction() {
 		GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));
 		if (tileSelected == NULL || tileSelected->canSpawn() == false)
 			return;
-		Harvester* harvester = new Harvester(tileSelected->x, tileSelected->y, game);
+		Harvester* harvester = new Harvester(tileSelected->x, tileSelected->y - 8, game);
 		tileSelected->placeItem(harvester);
 		decrement();
 		cout << "Harvester placed" << endl;

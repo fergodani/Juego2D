@@ -9,7 +9,7 @@ MenuLayer::MenuLayer(Game* game)
 void MenuLayer::init() {
 	// Fondo normal, sin velocidad
 	background = new Background("res/menu_fondo.jpg", WIDTH * 0.5, HEIGHT * 0.5, game);
-	button = new Actor("res/boton_jugar.png", WIDTH * 0.5, HEIGHT * 0.7, 180, 90, game);
+	button = new Actor("res/start.png", WIDTH * 0.5, HEIGHT * 0.8, 180, 32, game);
 }
 
 void MenuLayer::draw() {
@@ -24,15 +24,6 @@ void MenuLayer::processControls() {
 	// obtener controles
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
-		if (event.type == SDL_CONTROLLERDEVICEADDED) {
-			gamePad = SDL_GameControllerOpen(0);
-			if (gamePad == NULL) {
-				cout << "error en GamePad" << endl;
-			}
-			else {
-				cout << "GamePad conectado" << endl;
-			}
-		}
 		// Cambio automático de input
 		// PONER el GamePad
 		if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERAXISMOTION) {
@@ -45,9 +36,6 @@ void MenuLayer::processControls() {
 			game->input = game->inputMouse;
 		}
 		// Procesar teclas
-		if (game->input == game->inputGamePad) {  // gamePAD
-			gamePadToControls(event);
-		}
 		if (game->input == game->inputKeyboard) {
 			keysToControls(event);
 		}
@@ -90,7 +78,7 @@ void MenuLayer::mouseToControls(SDL_Event event) {
 	// Cada vez que hacen click
 	if (event.type == SDL_MOUSEBUTTONDOWN) {
 		if (button->containsPoint(motionX, motionY)) {
-			button->texture = game->getTexture("res/boton_jugar_pressed.png");
+			button->texture = game->getTexture("res/start2.png");
 			button->draw();
 		}
 	}
@@ -99,15 +87,6 @@ void MenuLayer::mouseToControls(SDL_Event event) {
 			controlContinue = true;
 		}
 
-	}
-}
-
-void MenuLayer::gamePadToControls(SDL_Event event) {
-	// Leer los botones
-	bool buttonA = SDL_GameControllerGetButton(gamePad, SDL_CONTROLLER_BUTTON_A);
-
-	if (buttonA) {
-		controlContinue = true;
 	}
 }
 

@@ -19,9 +19,11 @@ void Hoe::endAction() {
 	GroundTile* tileSelected = dynamic_cast<GroundTile*>(gameLayer->gridMap->getCollisionTile(gameLayer->player->x, gameLayer->player->y, gameLayer->player->orientation));
 	if (tileSelected == NULL)
 		return;
-	//cout << tileSelected->filename << endl;
 	if (tileSelected->isStonePlaced == true) {
 		tileSelected->recolectStone();
+	}
+	else if (tileSelected->isPlowed == true) {
+		tileSelected->removePlow();
 	}
 	else
 		tileSelected->plow();

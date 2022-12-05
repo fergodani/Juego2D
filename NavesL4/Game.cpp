@@ -12,9 +12,7 @@ Game::Game() {
 	SDL_SetWindowTitle(window, "Juego2D");
 	// Escalado de imágenes de calidad 
 	// https://wiki.libsdl.org/SDL_HINT_RENDER_SCALE_QUALITY
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-
-	//SDL_RenderSetLogicalSize(renderer, 1920, 1080);
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 	
 	menuLayer = new MenuLayer(this);
 	gameLayer = new GameLayer(this);

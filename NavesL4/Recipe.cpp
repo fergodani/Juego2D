@@ -53,7 +53,7 @@ Item* Recipe::getItem(Inventory* inventory) {
 			inventory->decrementWood(woodCuantity);
 			inventory->decrementStone(stoneCuantity);
 			//Harvester* harvester = new Harvester(newItem2->x, newItem2->y + 5, game);
-			return new Harvester(newItem2->x, newItem2->y + 5, game);
+			return new Harvester(newItem2->x, newItem2->y, game);
 		}
 		return NULL;
 	}

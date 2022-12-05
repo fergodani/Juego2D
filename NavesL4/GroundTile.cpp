@@ -1,12 +1,16 @@
 #include "GroundTile.h"
 GroundTile::GroundTile(float x, float y, float width, float height, bool canSpawn, Game* game)
 	: Tile("res/hierba1.png", x, y, width, height, canSpawn, game) {
-	
-	
 	audioPlow = Audio::createAudio("res/hoeHit.wav", false);
 	audioHarvest = Audio::createAudio("res/hoe.wav", false);
-	
-	
+	audioItem = Audio::createAudio("res/axe.wav", false);
+}
+
+GroundTile::GroundTile(string filename, float x, float y, float width, float height, bool canSpawn, Game* game)
+	: Tile("res/hierba1.png", x, y, width, height, canSpawn, game) {
+	audioPlow = Audio::createAudio("res/hoeHit.wav", false);
+	audioHarvest = Audio::createAudio("res/hoe.wav", false);
+	this->texture = game->getTexture(filename);
 }
 
 void GroundTile::plow() {
@@ -14,6 +18,18 @@ void GroundTile::plow() {
 		audioPlow->play();
 		groundPlowed = new Tile("res/plowed.png", this->x, this->y, 16, 16, false, game);
 		isPlowed = true;
+		if (isDetailPlaced) {
+			isDetailPlaced = false;
+			placedDetail->~Actor();
+		}
+	}
+}
+
+void GroundTile::removePlow() {
+	if (isPlowed) {
+		audioPlow->play();
+		groundPlowed->~Tile();
+		isPlowed = false;
 	}
 }
 
@@ -37,20 +53,40 @@ void GroundTile::draw(float scrollX, float scrollY) {
 	if (isItemPlaced == true) {
 		placedItem->draw(scrollX, scrollY);
 	}
-	
-}
-
-void GroundTile::placeGrass(Grass* grass) {
-	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false) {
-		isGrassPlaced = true;
-		placedGrass = grass;
+	if (isDetailPlaced == true) {
+		placedDetail->draw(scrollX, scrollY);
 	}
 }
 
+bool GroundTile::placeGrass(Grass* grass) {
+	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced) ){
+		isGrassPlaced = true;
+		placedGrass = grass;
+		if (isDetailPlaced) {
+			isDetailPlaced = false;
+			placedDetail->~Actor();
+		}
+		return true;
+	}
+	return false;
+}
+
 void GroundTile::placeItem(Item* item) {
-	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false) {
+	if (isGrassPlaced == false && isPlowed == false && isStonePlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced)) {
 		isItemPlaced = true;
 		placedItem = item;
+		if (isDetailPlaced) {
+			isDetailPlaced = false;
+			placedDetail->~Actor();
+		}
+	}
+}
+
+void GroundTile::removeItem() {
+	if (isItemPlaced) {
+		audioItem->play();
+		isItemPlaced = false;
+		placedItem->~Item();
 	}
 }
 
@@ -69,18 +105,30 @@ void GroundTile::recolectStone() {
 	}
 }
 
-void GroundTile::placeStone(Stone* stone) {
-	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false && isItemPlaced == false) {
+bool GroundTile::placeStone(Stone* stone) {
+	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced)) {
 		isStonePlaced = true;
 		placedStone = stone;
+		if (isDetailPlaced) {
+			isDetailPlaced = false;
+			placedDetail->~Actor();
+		}
+		return true;
 	}
+	return false;
 }
 
-void GroundTile::placeTree(Tree* tree) {
-	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false && isItemPlaced == false) {
+bool GroundTile::placeTree(Tree* tree) {
+	if (isStonePlaced == false && isPlowed == false && isGrassPlaced == false && isTreePlaced == false && isItemPlaced == false && (isDetailPlaced && isRemovableDetail || !isDetailPlaced)) {
 		isTreePlaced = true;
 		placedTree = tree;
+		if (isDetailPlaced) {
+			isDetailPlaced = false;
+			placedDetail->~Actor();
+		}
+		return true;
 	}
+	return false;
 }
 
 void GroundTile::recolectTree() {
@@ -143,5 +191,15 @@ void GroundTile::harvest() {
 			isCropPlanted = false;
 			plantedCrop->~Crop();
 		}
+	}
+}
+
+void GroundTile::placeDetail(Actor* actor, bool isRemovable) {
+	if (isStonePlaced == false && isGrassPlaced == false && isTreePlaced == false && !isDetailPlaced) {
+		isDetailPlaced = true;
+		placedDetail = actor;
+		if(!isRemovable)
+			placedDetail->y = this->y - this->height / 2;
+		isRemovableDetail = isRemovable;
 	}
 }

@@ -23,6 +23,8 @@
 #include <sstream> // Leer líneas / String
 #include <list>
 
+#define PUNTOS 25
+
 class GameLayer : public Layer
 {
 public:
@@ -33,7 +35,6 @@ public:
 	void draw() override;
 	void keysToControls(SDL_Event event);
 	void mouseToControls(SDL_Event event); // USO DE MOUSE
-	void gamePadToControls(SDL_Event event); // USO DE GAMEPAD
 	void loadMap(string name);
 	void loadMapObject(char character, float x, float y);
 	void calculateScroll();
@@ -42,15 +43,16 @@ public:
 	// Elementos de interfaz
 	SDL_GameController* gamePad;
 	Pad* pad;
-	Actor* buttonJump;
-	Actor* buttonShoot;
+	Actor* buttonA;
+	Actor* buttonB;
+	Actor* buttonNext;
+	Actor* buttonPre;
 
 	Space* space;
 	float scrollX;
 	float scrollY;
 	int mapHeight;
 	int mapWidth;
-	//list<Tile*> tiles;
 
 	Audio* audioBackground;
 	Player* player;
@@ -80,7 +82,7 @@ public:
 	void spawnTree();
 
 	int actionTime = 0;
-	int actionCadence = 15;
+	int actionCadence = 20;
 
 	list<Actor*> actorList;
 	list<Recipe*> recipesList;
@@ -88,5 +90,7 @@ public:
 	GridMap* gridMap;
 	Actor* tileGuide;
 	bool isGuide = false;
+
+	Actor* mission;
 };
 
