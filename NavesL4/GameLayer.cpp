@@ -14,10 +14,12 @@ GameLayer::GameLayer(Game* game)
 
 
 void GameLayer::init() {
-	pad = new Pad(WIDTH * 0.15, HEIGHT * 0.80, game);
+	pad = new Pad(WIDTH * 0.15, HEIGHT * 0.65, game);
 
-	buttonJump = new Actor("res/boton_salto.png", WIDTH * 0.9, HEIGHT * 0.55, 100, 100, game);
-	buttonShoot = new Actor("res/boton_disparo.png", WIDTH * 0.75, HEIGHT * 0.83, 100, 100, game);
+	buttonA = new Actor("res/onscreenControlls/transparentDark34.png", WIDTH * 0.9, HEIGHT * 0.83, 70, 70, game);
+	buttonB = new Actor("res/onscreenControlls/transparentDark35.png", WIDTH * 0.75, HEIGHT * 0.83, 70, 70, game);
+	buttonNext = new Actor("res/onscreenControlls/transparentDark23.png", WIDTH * 0.9, HEIGHT * 0.63, 70, 70, game);
+	buttonPre = new Actor("res/onscreenControlls/transparentDark22.png", WIDTH * 0.75, HEIGHT * 0.63, 70, 70, game);
 
 	tileGuide = new Actor("res/mark.png", 0, 0, 16, 16, game);
 
@@ -28,9 +30,7 @@ void GameLayer::init() {
 	audioBackground = Audio::createAudio("res/spring_day.wav", true);
 	audioBackground->play();
 
-	//loadMap("res/agua.txt");
 	loadMap("res/terreno.txt");
-	//loadMap("res/hills.txt");
 	gridMap->rows = mapHeight / 16;
 	gridMap->columns = mapWidth / 16;
 	loadMap("res/detalles.txt");
@@ -59,8 +59,6 @@ void GameLayer::loadMap(string name) {
 				float y = 16 + i * 16; // y suelo
 				loadMapObject(character, x, y);
 			}
-
-			cout << character << endl;
 		}
 		mapHeight = lines * 16;
 	}
@@ -416,10 +414,7 @@ void GameLayer::processControls() {
 		if (game->input == game->inputMouse) {
 			mouseToControls(event);
 		}
-		// Procesar Mando
-		if (game->input == game->inputGamePad) {  // gamePAD
-			gamePadToControls(event);
-		}
+		
 
 
 	}
@@ -498,8 +493,6 @@ void GameLayer::update() {
 			}
 		}	
 	}
-
-	
 
 	if (grassSpawnTime > 0) {
 		grassSpawnTime--;
@@ -614,6 +607,13 @@ void GameLayer::draw() {
 	// HUD
 	player->inventory->drawItems();
 	mission->draw();
+	if (game->input == game->inputMouse) {
+		buttonA->draw();
+		buttonB->draw();
+		buttonPre->draw();
+		buttonNext->draw();
+		pad->draw();
+	}
 	if (pause) {
 		message->draw();
 	}
@@ -621,44 +621,7 @@ void GameLayer::draw() {
 	SDL_RenderPresent(game->renderer); // Renderiza
 }
 
-void GameLayer::gamePadToControls(SDL_Event event) {
 
-	// Leer los botones
-	bool buttonA = SDL_GameControllerGetButton(gamePad, SDL_CONTROLLER_BUTTON_A);
-	bool buttonB = SDL_GameControllerGetButton(gamePad, SDL_CONTROLLER_BUTTON_B);
-	bool buttonX = SDL_GameControllerGetButton(gamePad, SDL_CONTROLLER_BUTTON_X);
-	bool buttonY = SDL_GameControllerGetButton(gamePad, SDL_CONTROLLER_BUTTON_Y);
-	// SDL_CONTROLLER_BUTTON_A, SDL_CONTROLLER_BUTTON_B
-	// SDL_CONTROLLER_BUTTON_X, SDL_CONTROLLER_BUTTON_Y
-	cout << "botones:" << buttonA << "," << buttonB << endl;
-	int stickX = SDL_GameControllerGetAxis(gamePad, SDL_CONTROLLER_AXIS_LEFTX);
-	cout << "stickX" << stickX << endl;
-
-	// Retorna aproximadamente entre [-32800, 32800], el centro debería estar en 0
-	// Si el mando tiene "holgura" el centro varia [-4000 , 4000]
-	if (stickX > 4000) {
-		controlMoveX = 1;
-	}
-	else if (stickX < -4000) {
-		controlMoveX = -1;
-	}
-	else {
-		controlMoveX = 0;
-	}
-
-	if (buttonA) {
-		controlAction = true;
-		controlContinue = true;
-	}
-
-	if (buttonB) {
-		controlSwitchTool = true;
-	}
-	if (buttonX) {
-		isGuide = !isGuide;
-	}
-
-}
 
 
 void GameLayer::mouseToControls(SDL_Event event) {
@@ -671,15 +634,23 @@ void GameLayer::mouseToControls(SDL_Event event) {
 		if (pad->containsPoint(motionX, motionY)) {
 			pad->clicked = true;
 			// CLICK TAMBIEN TE MUEVE
-			controlMoveX = pad->getOrientationX(motionX);
+				if ((motionX >= 125 || motionX <= 70) && !(motionY <= 210 || motionY >= 258))
+					controlMoveX = pad->getOrientationX(motionX);
+				if ((motionY <= 210 || motionY >= 258) && !(motionX >= 125 || motionX <= 70))
+					controlMoveY = pad->getOrientationY(motionY);
 		}
-		if (buttonShoot->containsPoint(motionX, motionY)) {
-			//controlShoot = true;
+		if (buttonA->containsPoint(motionX, motionY)) {
+			controlAction = true;
 		}
-		if (buttonJump->containsPoint(motionX, motionY)) {
-			controlMoveY = -1;
+		if (buttonB->containsPoint(motionX, motionY)) {
+			isGuide = !isGuide;
 		}
-
+		if (buttonNext->containsPoint(motionX, motionY)) {
+			player->inventory->nextItem();
+		}
+		if (buttonPre->containsPoint(motionX, motionY)) {
+			player->inventory->previousItem();
+		}
 	}
 	// Cada vez que se mueve
 	if (event.type == SDL_MOUSEMOTION) {
@@ -689,18 +660,16 @@ void GameLayer::mouseToControls(SDL_Event event) {
 			if (controlMoveX > -20 && controlMoveX < 20) {
 				controlMoveX = 0;
 			}
+			if (controlMoveY > -20 && controlMoveY < 20) {
+				controlMoveY = 0;
+			}
 
 		}
 		else {
 			pad->clicked = false; // han sacado el ratón del pad
 			controlMoveX = 0;
 		}
-		if (buttonShoot->containsPoint(motionX, motionY) == false) {
-			//controlShoot = false;
-		}
-		if (buttonJump->containsPoint(motionX, motionY) == false) {
-			controlMoveY = 0;
-		}
+		
 
 	}
 	// Cada vez que levantan el click
@@ -709,13 +678,11 @@ void GameLayer::mouseToControls(SDL_Event event) {
 			pad->clicked = false;
 			// LEVANTAR EL CLICK TAMBIEN TE PARA
 			controlMoveX = 0;
+			controlMoveY = 0;
 		}
 
-		if (buttonShoot->containsPoint(motionX, motionY)) {
-			//controlShoot = false;
-		}
-		if (buttonJump->containsPoint(motionX, motionY)) {
-			controlMoveY = 0;
+		if (buttonA->containsPoint(motionX, motionY) == false) {
+			controlAction = false;
 		}
 
 	}

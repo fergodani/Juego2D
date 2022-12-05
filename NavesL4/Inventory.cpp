@@ -30,8 +30,6 @@ Inventory::Inventory(Game* game) {
 	textWood->content = to_string(wood);
 
 	toolSwap = Audio::createAudio("res/toolSwap.wav", false);
-
-	//uiVertical = new Actor("res/uiVertical.png", WIDTH * 0.08, HEIGHT * 0.20, 60, 96, game);
 }
 
 
@@ -61,8 +59,6 @@ void Inventory::drawItems() {
 	float gap = 0.15;
 	int count = 0;
 	for (auto item : items) {
-		//if (item->cuantity <= 0)
-			//continue;
 		item->x = WIDTH * gap;
 		item->y = HEIGHT * 0.90;
 		item->draw();
@@ -81,7 +77,6 @@ void Inventory::drawItems() {
 		}
 		gap += 0.1;
 	}
-	//uiVertical->draw();
 	backgroundCoin->draw();
 	backgroundRock->draw();
 	backgroundWood->draw();
